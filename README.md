@@ -25,6 +25,4 @@ I want to rest !!
 
 세팅
 
-
 jira 스마트 커밋 실습 재시도
-
