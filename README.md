@@ -27,8 +27,9 @@ I want to rest !!
 
    - [] 김신혜
    - [x] 이수정
-   - [] 전성재
+   - [x] 전성재
    - [v] 최계수
+
 
 ## local 개발 환경 setting 튜토리얼
 
