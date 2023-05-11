@@ -27,4 +27,4 @@ I want to rest !!
 
 
 jira 스마트 커밋 실습 재시도
-a
+
