@@ -21,3 +21,10 @@ I want to rest !!
    - app 등록
    - extensions 추가
    - STATIC, MEDIA 세팅하기
+
+
+세팅
+
+
+jira 스마트 커밋 실습 재시도
+
