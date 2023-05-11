@@ -23,6 +23,8 @@ I want to rest !!
    - STATIC, MEDIA 세팅
 
 
+세팅
+
 
 jira 스마트 커밋 실습 재시도
 
