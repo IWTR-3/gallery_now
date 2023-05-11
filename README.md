@@ -21,3 +21,6 @@ I want to rest !!
    - app 등록
    - extensions 추가
    - STATIC, MEDIA 세팅
+
+
+수정
