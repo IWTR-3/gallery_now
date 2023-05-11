@@ -22,8 +22,7 @@ I want to rest !!
    - extensions 추가
    - STATIC, MEDIA 세팅
 
-
-수정
+세팅
 
 세팅
 
