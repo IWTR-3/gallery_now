@@ -20,4 +20,4 @@ I want to rest !!
 5. settings.py 작성
    - app 등록
    - extensions 추가
-   - STATIC, MEDIA 세팅
+   - STATIC, MEDIA 세팅하기
