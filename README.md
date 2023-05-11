@@ -26,7 +26,7 @@ I want to rest !!
 6. 로컬 개발환경 및 smart 커밋 메세지 세팅 !
 
    - [] 김신혜
-   - [] 이수정
+   - [x] 이수정
    - [] 전성재
    - [] 최계수
 
@@ -48,24 +48,32 @@ pip  install -r requirements.txt
 git config --local commit.template .github/.gitmessage.txt
 ```
 
-2. 개발 및 commit
+2. commit & push
 
 ```bash
 # branch from develop
 git checkout -b feature/{ 기능 또는 이슈 } develop
+```
 
-## 작업 ##
+> 작업 중간중간 의미 단위 커밋 자주해주세요.
 
-git add {나의 작업}
+```bash
+git add <path or file>
 git commit
+```
 
+> 푸시 .. 전에 develop 머지하기 !
+
+```bash
 git pull origin develop:develop
 git merge --ff develop
+```
 
-## 컨플릭트 발생시 해결 후
+> 컨플릭트 해소 후 다시 커밋해주세요.
+
+```bash
+git commit --reedit-message=<commit>
 git push origin feature/{ 기능 또는 이슈 }
 ```
 
-```
-
-```
+3. pull request
