@@ -18,6 +18,14 @@ I want to rest !!
 4. .gitignore 생성
 
 5. settings.py 작성
+
    - app 등록
    - extensions 추가
    - STATIC, MEDIA 세팅
+
+6. 로컬 개발환경 및 smart 커밋 메세지 세팅
+
+   - [] 김신혜
+   - [] 이수정
+   - [] 전성재
+   - [] 최계수
