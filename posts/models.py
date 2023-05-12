@@ -54,4 +54,9 @@ class Review(models.Model):
     star = models.CharField(max_length=1, choices=STAR_CHOICES)
 
 
+class Theme(models.Model):
+    title = models.CharField(max_length=30)
+    exhibitions = models.ManyToManyField(Exhibition, related_name='themes')
+    
+
     # on_delete=models.SET_NULL, null=True
