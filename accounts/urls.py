@@ -3,7 +3,7 @@ from . import views
 
 app_name = 'accounts'
 urlpatterns = [
-    # # 로그인, 로그아웃, 회원가입, 계정삭제, 정보수정, 비밀번호변경
+    # 로그인, 로그아웃, 회원가입, 계정삭제, 정보수정, 비밀번호변경
     # path('login/', views.login, name='login'),
     # path('logout/', views.logout, name='logout'),
     # path('signup', views.signup, name='signup'),
