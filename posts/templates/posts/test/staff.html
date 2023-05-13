@@ -1,0 +1,17 @@
+<h1>staff only page</h1>
+
+
+<form action="{% url 'posts:update_exhibition_list' %}" method="post">
+  {% csrf_token %}
+  <input type="submit" value="전시 목록 업데이트">
+</form>
+
+<h1>현재 데이터베이스에 {{ items.count }}개의 전시가 있습니다.</h1>
+
+<br>
+{% for item in items %}
+
+<h3>{{ item.pk }} - {{ item.title }}</h3>
+<hr>
+
+{% endfor %}
