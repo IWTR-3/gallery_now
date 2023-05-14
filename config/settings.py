@@ -139,4 +139,4 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'auth.User' # 기본 값 'auth.User'
+AUTH_USER_MODEL = 'accounts.User' # 기본 값 'auth.User'

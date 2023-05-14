@@ -1,0 +1,10 @@
+<h1>  테마 수정 페이지  </h1>
+
+
+<form action="{% url 'posts:update_theme' %}" method="post">
+
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="update">
+  
+  </form>
