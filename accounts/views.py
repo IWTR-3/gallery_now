@@ -44,3 +44,5 @@ def signup(request):
 def delete(request):
     request.user.delete()
     return redirect('posts:index')
+
+#수정

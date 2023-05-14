@@ -5,3 +5,5 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
         fields = ('email', 'nickname') 
+
+        #수정
