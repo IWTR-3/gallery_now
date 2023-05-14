@@ -31,14 +31,15 @@ class Artist(models.Model):
     nationality = models.CharField(max_length=3, choices=COUNTRIES)
 
 class Exhibition(models.Model):
-    title = models.CharField(max_length=30)
-    fees = models.IntegerField(null=True)
-    address = models.CharField(max_length=30)
-    gallery = models.ForeignKey(Gallery, on_delete=models.SET_NULL, null=True)
-    begin = models.DateTimeField(null=True)
-    end = models.DateTimeField(null=True)
+    uci = models.CharField(max_length=100, unique=True)
+    title = models.CharField(max_length=100)
+    period = models.CharField(max_length=100, null=True)
+    time = models.CharField(max_length=100, null=True)
+    charge = models.CharField(max_length=100, null=True)
+    grade = models.CharField(max_length=100, null=True)
+    venue = models.CharField(max_length=100, null=True)
     image = models.ImageField(null=True)
-    artists = models.ManyToManyField(Artist, related_name='exhibitions')
+    
 
 class Review(models.Model):
     exhibition = models.ForeignKey(Exhibition, on_delete=models.SET_NULL, null=True)
