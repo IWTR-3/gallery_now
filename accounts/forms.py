@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import get_user_model
 from django import forms
 
@@ -17,6 +18,10 @@ class LogInForm(AuthenticationForm):
         fields = ('email', 'password')
         
 # 회원가입폼 위젯
+from django.forms.widgets import ClearableFileInput
+from imagekit.forms import ProcessedImageField
+from imagekit.processors import ResizeToFill
+
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(
         label='이메일',
@@ -36,6 +41,6 @@ class CustomUserCreationForm(UserCreationForm):
             attrs={'class': 'form-control','placeholder': '비밀번호를 다시 입력하세요',}),)    
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
-        fields = ('email', 'nickname') 
+        fields = ('email', 'nickname',) 
 
         #수정
