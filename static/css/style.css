@@ -1,0 +1,55 @@
+.tag_crop {
+    width: 390px;
+    height: 240px;
+    object-fit: cover;
+}
+
+.tag_img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 20% 10%;
+  }
+
+.theme_img {
+    max-width:100%;
+    width: 240px;
+    
+}
+.circle {
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.over_text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bg_cover {
+    width:100%;
+    height: 150px;
+    background-image: url("https://cdn.crowdpic.net/detail-thumb/thumb_d_D5EF186952DF1E9BD4339DDCAC06A805.jpg");
+
+}
+.bg_img {
+    background: linear-gradient(to right, rgb(188, 255, 140), rgb(108, 211, 255));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+.detail_img {
+    max-width: 100%;
+    max-height: 600px;
+}
+
+.detail_b_img {
+    max-width: 1000px;
+    width: auto;
+}

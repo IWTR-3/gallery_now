@@ -1,0 +1,7 @@
+<h1>now</h1>
+<hr>
+{% for theme in theme_list %}
+
+<h1><a href="{% url 'posts:theme' theme.pk %}">{{ theme.title }}</a></h1>
+<hr>
+{% endfor %}

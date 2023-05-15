@@ -1,0 +1,10 @@
+
+<h1>{{ theme.title }} detail</h2>
+<hr>
+{% for exhibition in theme.exhibitions.all %}
+
+
+<h2><a href="#">{{ exhibition.title }}</a></h2>
+<hr>
+
+{% endfor %}
