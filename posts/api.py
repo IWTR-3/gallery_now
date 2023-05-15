@@ -1,42 +1,63 @@
 # posts/api.py
 
-import requests # 👉️ Requests module
-from bs4 import BeautifulSoup # 👉️ BeautifulSoup module
+import requests  # 👉️ Requests module
+from bs4 import BeautifulSoup  # 👉️ BeautifulSoup module
 from .models import Exhibition
+from .forms import ExhibitionForm
+import json
 
-# 문화기관 통합 전시정보
-url = "http://api.kcisa.kr/openapi/service/rest/convergence/conver6"
-serviceKey = "7a1ac8ea-5c3b-4e44-b978-60596f3b002d"
 
 def update():
-    count = len(Exhibition.objects.all())
-    print("update exhibition list")
+    count = 0
+    print(" message : start update")
 
+    name = "문화기관통합전시정보"
     url = 'http://api.kcisa.kr/openapi/service/rest/convergence/conver6'
-    serviceKey = "7a1ac8ea-5c3b-4e44-b978-60596f3b002d"
+    serviceKey = "e8696365-85f8-49b4-b7a2-ed1fce3b590f"
+    numOfRows = 30
+    pageNo = 1
 
-    params ={'serviceKey' : serviceKey}
-    response = requests.get(url, params=params)
-    xml = response.text
-    soup = BeautifulSoup(xml, 'html.parser')
-    for item in soup.find_all('item'):
-        
-        title = item.find('title').text
-        time = item.find('time').text
-        # referenceIdentifier = item.find('referenceIdentifier').text
-        venue = item.find('venue').text
-        charge = item.find('charge').text
-        period = item.find('period').text
-        grade = item.find('grade').text
-        uci = item.find('uci').text
+    while pageNo < 4:
+        print(" message : update page", pageNo)
+        params = {'serviceKey': serviceKey, 'numOfRows': str(
+            numOfRows), 'pageNo': str(pageNo), }
 
+        response = requests.get(url, params=params)
+        xml = response.text
+        soup = BeautifulSoup(xml, 'html.parser')
 
-        new_item = Exhibition.objects.create(title=title, period=period, time=time, charge=charge, venue=venue, grade=grade, uci=uci)
-        print(new_item)
-    print(count, len(Exhibition.objects.all()))
-    if count < len(Exhibition.objects.all()):
-        return True
+        for item in soup.find_all('item'):
+            count += _create_object(item)
+
+        pageNo += 1
+
+    if count > 1:
+        return str(f"message : {count} items created")
     else:
-        return False
+        return str(f"message : {count} item created")
 
 
+def _create_object(item):
+
+    data = {
+
+    }
+
+    field_list = Exhibition.FIELDS
+
+    for field in field_list:
+        Tag = item.find(field)
+        if Tag:
+            data[field] = Tag.text[:100]
+        else:
+            data[field] = "Unknown"
+
+    form = ExhibitionForm(data=data)
+
+    if form.is_valid():
+        print(" message : 1")
+        form.save()
+        return 1
+    else:
+        print(" message :", form.is_bound, form.errors)
+        return 0
