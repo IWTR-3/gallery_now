@@ -35,6 +35,8 @@ def theme2(request):
     return render(request, 'posts/theme2.html')
 
 # 임시 detail
+
+
 def detail(request):
     return render(request, 'posts/detail.html')
 
@@ -79,3 +81,10 @@ def update_exhibition_list(request):
         if request.user.is_admin:
             print(api.update())
     return redirect('posts:staff')
+
+
+# 관리자의 테마 생성 플로우
+"""
+0. 태그 관리자 페이지 에서 태그 통계 확인
+1. 테마 생성하기 버튼 입력
+"""
