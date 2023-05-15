@@ -5,6 +5,7 @@ app_name = 'posts'
 urlpatterns = [
     path('', views.index, name='index'),
     path('<int:theme_pk>/', views.theme, name='theme'),
+    path('theme2', views.theme2, name='theme2'),
 
     # 이하 관리자만 접근 가능한 url 목록
     path('staff/', views.staff, name='staff'),

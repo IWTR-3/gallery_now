@@ -14,8 +14,8 @@ def index(request):
     context = {
         'theme_list':theme_list,
     }
-    return render(request, 'posts/test/now.html', context)
-    #return render(request, 'posts/index.html', context)
+    # return render(request, 'posts/test/now.html', context)
+    return render(request, 'posts/index.html', context)
 
 # 선택된 테마의 포함된 전시 리스트를 보여준다.
 def theme(request, theme_pk):
@@ -23,7 +23,12 @@ def theme(request, theme_pk):
     context = {
         'theme':theme,
     }
-    return render(request, 'posts/test/theme.html', context)
+    return render(request, 'posts/theme.html', context)
+
+# 임시 theme 
+def theme2(request):
+
+    return render(request, 'posts/theme2.html')
 
 # 테마를 생성한다.
 @login_required
