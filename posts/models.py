@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.conf import settings
+from taggit.managers import TaggableManager  # 👈 for taggit
 
 
 class Gallery(models.Model):
@@ -44,6 +45,7 @@ class Exhibition(models.Model):
     grade = models.CharField(max_length=100, null=True)
     referenceIdentifier = models.CharField(max_length=100, null=True)
     # thumbnail = models.ImageField(null=True)
+    tags = TaggableManager()
 
 
 class Review(models.Model):

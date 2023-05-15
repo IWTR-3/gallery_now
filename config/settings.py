@@ -35,12 +35,15 @@ INSTALLED_APPS = [
     'posts',
 
     'django_extensions',
-    'imagekit',
     'debugtools',
 
     'taggit',
-    'rest_framework',
     'taggit_templatetags2',
+
+    'imagekit',
+
+    'rest_framework',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -128,7 +131,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [ BASE_DIR / 'static',]
+STATICFILES_DIRS = [BASE_DIR / 'static',]
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
@@ -139,4 +142,7 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'accounts.User' # 기본 값 'auth.User'
+AUTH_USER_MODEL = 'accounts.User'  # 기본 값 'auth.User'
+
+# Taggit options
+TAGGIT_CASE_INSENSITIVE = True  # 대소문자 구분 X
