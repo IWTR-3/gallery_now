@@ -1,0 +1,36 @@
+{
+  "header": {
+    "resultCode": "string",
+    "resultMsg": "string"
+  },
+  "body": {
+    "items": {
+      "item": [
+        {
+          "title": "string",
+          "alternativeTitle": "string",
+          "creator": "string",
+          "regDate": "string",
+          "collectionDb": "string",
+          "subjectCategory": "string",
+          "subjectKeyword": "string",
+          "extent": "string",
+          "description": "string",
+          "spatial": "string",
+          "temporalCoverage": "string",
+          "person": "string",
+          "language": "string",
+          "sourceTitle": "string",
+          "referenceIdentifier": "string",
+          "rights": "string",
+          "copyrightOthers": "string",
+          "url": "string",
+          "contributor": "string"
+        }
+      ]
+    },
+    "numOfRows": "10",
+    "pageNo": "1",
+    "totalCount": "string"
+  }
+}
