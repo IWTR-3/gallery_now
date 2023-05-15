@@ -10,3 +10,23 @@
     object-fit: cover;
     object-position: 20% 10%;
   }
+
+.theme_img {
+    max-width:100%;
+    width: 240px;
+    
+}
+.circle {
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.over_text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
