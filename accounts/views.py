@@ -2,20 +2,20 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from .forms import CustomUserCreationForm
-
+from .forms import CustomUserCreationForm, LogInForm
 # Create your views here.
 
 def login(request):
 
     if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
+        form = LogInForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
             return redirect('posts:index')
     else:
-        form = AuthenticationForm()
+        form = LogInForm()
     context = {
         'form': form,
     }
@@ -46,3 +46,11 @@ def delete(request):
     return redirect('posts:index')
 
 #수정
+
+def profile(request, user_pk):
+    User = get_user_model()
+    person = User.objects.get(pk=user_pk)
+    context = {
+        'person': person,
+    }
+    return render(request, 'accounts/profile.html', context)

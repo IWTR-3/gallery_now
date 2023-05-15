@@ -4,14 +4,14 @@
 {% endblock title %}
 {% block content %}
   <div class="container">
-    <h1 class="mt-5 text-center" style="font-family: 'S-CoreDream-3Light';">로그인</h1>
+    <h1 class="mt-5 text-center">로그인</h1>
     <hr>
-    <div class="mt-5 d-flex justify-content-center">
-      <form action="{% url 'accounts:login' %}" method="POST" class="d-grid gap-2">
+    <div class="mx-auto mt-5 d-flex justify-content-center" style="width: 700px;">
+      <form action="{% url 'accounts:login' %}" method="POST" class="d-grid w-50 gap-2">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form.as_p}}
         <div class="d-grid gap-2">
-          <input type="submit" value="Login" class="btn btn-dark border-radius">
+          <input type="submit" value="Login" class="btn btn-dark border-radius p-2">
         </div>
       </form>
     </div>
