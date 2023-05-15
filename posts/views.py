@@ -27,20 +27,29 @@ def theme(request, theme_pk):
     }
     return render(request, 'posts/theme.html', context)
 
-# 임시 theme
+# 전시 detail 조회
 
 
-def theme2(request):
+def detail(request, exhibition_pk):
 
-    return render(request, 'posts/theme2.html')
-
-# 임시 detail
-
-
-def detail(request):
     return render(request, 'posts/detail.html')
 
-# 테마를 생성한다.
+
+# 리뷰 C
+def review(request, exhibition_pk):
+    return redirect('posts:detail', exhibition_pk)
+
+# 리뷰 U
+
+
+def review_update(request, exhibition_pk, review_pk):
+    return redirect('posts:detail', exhibition_pk)
+
+# 리뷰 D
+
+
+def review_delete(request, exhibition_pk, review_pk):
+    return redirect('posts:detail', exhibition_pk)
 
 
 @login_required
