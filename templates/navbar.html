@@ -19,7 +19,7 @@
           {% csrf_token %}
           <input type="submit" value="Logout" class="btn btn-outline-dark border-radius">
         </form>
-        <a class="px-3 link-dark link-underline-light text-center align-items-center" style="text-decoration-line:none;" href="{% url 'accounts:profile' user.pk %}">
+        <a class="px-3 link-dark link-underline-light text-center align-items-center" style="text-decoration-line:none;" href="{% url 'accounts:profile' user.nickname %}">
           {% if user.profile_image %}
             <img src="{{ user.profile_image.url }}" alt="post_image" class="rounded-circle" height="40">
           {% else %}
