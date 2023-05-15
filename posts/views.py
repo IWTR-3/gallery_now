@@ -34,6 +34,10 @@ def theme2(request):
 
     return render(request, 'posts/theme2.html')
 
+# 임시 detail
+def detail(request):
+    return render(request, 'posts/detail.html')
+
 # 테마를 생성한다.
 
 
