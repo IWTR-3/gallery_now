@@ -6,7 +6,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('<int:theme_pk>/', views.theme, name='theme'),
     path('theme2', views.theme2, name='theme2'),
-
+    path('detail', views.detail, name='detail'),
     # 이하 관리자만 접근 가능한 url 목록
     path('staff/', views.staff, name='staff'),
     path('staff/update_exhibition_list/', views.update_exhibition_list, name='update_exhibition_list'),
