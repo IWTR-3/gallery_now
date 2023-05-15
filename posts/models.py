@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from taggit.managers import TaggableManager  # 👈 for taggit
+from taggit.models import (
+    TagBase,
+    TaggedItemBase
+)
 
 
 class Gallery(models.Model):
