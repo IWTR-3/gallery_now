@@ -6,7 +6,7 @@
     <b class="fs-1 bg_img text-center d-flex align-items-center justify-content-center">EXHIBITION</b>
 </div>
 <!-- 전시회 팜플렛 -->
-<h2 class="text-center mt-5">최인수 : 물질의 서사</h2>
+<h2 class="text-center mt-5">{{ artist.name_ko }}최인수 : {{ exhibition.title }}물질의 서사</h2>
 <div class="container-fluid d-flex justify-content-center align-items-center my-5">
     <div class="d-flex mt-5" style="height:600px; gap:6rem">
         <img class="detail_img"  src="https://art-map.co.kr/art-map/public/upload/2023/04/exhibition/8a0e457cf9726765c33232e9d0327a29_1BecomingaPlace12019Zelkova188.5x17.2x9.5cm.jpg" alt="">
@@ -15,39 +15,39 @@
             <table class="table text-start text-nowrap" style="width:500px; font-size:16px">
                 <tr>
                     <th scope="row"><span class="">기간</span></th>
-                    <td><span class="border-start ps-3 text-secondary">2023.04.20 - 2023.05.30</span></td>
+                    <td><span class="border-start ps-3 text-secondary">{{ exhibition.period }}2023.04.20 - 2023.05.30</span></td>
                 </tr>
                 <tr>
                     <th scope="row"><span class="">시간</span></th>
-                    <td><span class="border-start ps-3 text-secondary">월-금 10:00 - 18:30</span> </td>
+                    <td><span class="border-start ps-3 text-secondary">{{ exhibition.time }}월-금 10:00 - 18:30</span> </td>
                 </tr>
                 <tr>
                     <th scope="row"><span class="">장소</span></th>
-                    <td><span class="border-start ps-3 text-secondary">데이트갤러리</span></td>
+                    <td><span class="border-start ps-3 text-secondary">{{ gallery.name }}데이트갤러리</span></td>
                 </tr>
                 <tr>
                     <th scope="row"><span class="">주소</span></th>
-                    <td><span class="border-start ps-3 text-secondary">부산 해운대로</span></td>
+                    <td><span class="border-start ps-3 text-secondary">{{ gallery.address }}부산 해운대로</span></td>
                 </tr>
                 <tr>
                     <th scope="row"><span class="">휴관</span></th>
-                    <td><span class="border-start ps-3 text-secondary">일요일</span></td>
+                    <td><span class="border-start ps-3 text-secondary">{{ gallery.closed_days }}일요일</span></td>
                 </tr>
                 <tr>
                     <th scope="row"><span class="">관람료</span></th>
-                    <td><span class="border-start ps-3 text-secondary">무료</span></td>
+                    <td><span class="border-start ps-3 text-secondary">{{ exhibition.charge }}무료</span></td>
                 </tr>
                 <tr>
                     <th scope="row"><span class="">전화번호</span></th>
-                    <td><span class="border-start ps-3 text-secondary">010-1234-1234</span></td>
+                    <td><span class="border-start ps-3 text-secondary">{{ gallery.phone_number }}010-1234-1234</span></td>
                 </tr>
                 <tr>
                     <th scope="row"><span class="">사이트</span></th>
-                    <td><span class="border-start ps-3 "><a class="link-dark" href="#">홈페이지 바로가기</a></span></td>
+                    <td><span class="border-start ps-3 "><a class="link-dark" href="{{ exhibition.referenceIdentifier }}">홈페이지 바로가기</a></span></td>
                 </tr>
                 <tr>
                     <th scope="row"><span class="">작가</span></th>
-                    <td><span class="border-start ps-3 ">최인수</span></td>
+                    <td><span class="border-start ps-3 ">{{ artist.name_ko }}최인수</span></td>
                 </tr>            
             </table>
         </div>
@@ -55,6 +55,7 @@
 </div>
 <hr>
 <!-- 전시 사진 내용 -->
+{% for image in images %}
 <div class="my-5 text-center">
     <h5 class="mb-5">전시 정보</h5>
     <img class="detail_b_img"  src="https://art-map.co.kr/art-map/public/upload/2023/04/exhibition/8a0e457cf9726765c33232e9d0327a29_1BecomingaPlace12019Zelkova188.5x17.2x9.5cm.jpg" alt="">
@@ -63,6 +64,7 @@
     <div>2019년 Zelkova 188.5x17.2x9.5cm</div>
     <div>(이미지 제공 = 데이트갤러리)</div>
 </div>
+{% endfor %}
 
 <!-- 설명 -->
 <div class="container" style="color:gray;">
@@ -75,37 +77,11 @@
 <hr>
 
 <!-- 리뷰 작성 -->
-<h2 class="text-center my-4" style="font-weight:bolder">REVIEW</h2>
-<div class="container my-3" style="color:rgb(106, 106, 106);">
-    <hr>
-    <div class="d-flex gap-4 mt-2 ">
-        {% if user.is_authenticated %}
-            <!-- 프로필 이미지 -->
-            <a href="{% url 'accounts:profile' user.nickname %}">
-                {% if person.profile_image %}
-                <img src="{{ person.profile_image.url }}" alt="post_image" class="rounded-circle" width="50" height="50">
-                {% else %}
-                <img src="https://i.pinimg.com/564x/d2/98/4e/d2984ec4b65a8568eab3dc2b640fc58e.jpg" alt="no_image" class="rounded-circle" width="50" height="50">
-            </a>
-            {% endif %}
-            <!-- 닉네임 -->
-            <span>
-                <span><b>{{ review.person.nickname }}nickname</b></span>
-                <div class="d-flex gap-3">
-                    <!-- 팔로워 -->
-                    <p>followers : <span id="followers-count">{{ person.followers.all|length }}</span>
-                    </p>
-                    <!-- 팔로잉 -->
-                    <p>followings : <span id="followings-count">{{ person.followings.all|length }}</span>
-                    </p>
-                </div>
-            </span>
-
-            {% endif %}
-        </div>
-        <!-- 리뷰 -->
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Recusandae, corporis! Laborum cupiditate fugiat, ullam iste sint esse beatae suscipit. Possimus mollitia qui recusandae libero non nulla sed voluptatum in architecto ratione. Ipsum sit laborum dolorem aliquid unde vero facilis praesentium minus molestiae non recusandae natus, delectus hic ipsam labore cum?</p>
-        <p class="text-end" style="font-size:7px">{{ review.updated_at }}2023-03-24</p>
+<div class="container d-block">
+    <h2 class="text-center mt-4" style="font-weight:bolder">REVIEW</h2>
+    {% comment %} <p class="text-end m-0 p-o">{{ reviews.all|length }}</p> {% endcomment %}
 </div>
+
+{% include 'posts/review.html' %}
 
 {% endblock content %}

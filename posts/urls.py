@@ -18,8 +18,10 @@ urlpatterns = [
     path('exhibition/<int:exhibition_pk>/review/<int:review_pk>/delete/',
          views.review_delete, name='review_delete'),  # review 삭제
 
+    # 예시 파일
     path('theme2', views.theme2 , name='theme2'),
     path('theme2/detail', views.detail2, name='detail2'),
+
 
     # 이하 관리자만 접근 가능한 url 목록
     path('staff/', views.staff, name='staff'),
