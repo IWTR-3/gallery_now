@@ -12,8 +12,7 @@
     object-position: 20% 10%;
     vertical-align: middle;
     filter: brightness(50%); 
-
-  }
+}
 
 .tag_text {
     font-size: 30px;
@@ -21,7 +20,12 @@
 	text-align: center;
 	position: absolute;
 	top: 45%;
-	left: 35%;}
+	left: 35%;
+}
+
+.tag_img:hover {
+    filter: brightness(25%);
+}
 
 .tag_a {
     text-decoration: none;
