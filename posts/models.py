@@ -40,15 +40,19 @@ class Artist(models.Model):
 
 class Exhibition(models.Model):
     FIELDS = ['title', 'period', 'time', 'charge',
-              'grade', 'referenceIdentifier']  # 'thumbnail']
+              'grade', ]  # 'thumbnail'
+
+    def img_path(instance):
+        return f'posts/thumbnails/'
 
     title = models.CharField(max_length=100)
-    period = models.CharField(max_length=100, null=True)
-    time = models.CharField(max_length=100, null=True)
-    charge = models.CharField(max_length=100, null=True)
-    grade = models.CharField(max_length=100, null=True)
-    referenceIdentifier = models.URLField(default="#")
-    thumbnail = models.ImageField('대표이미지', upload_to='thumbnails/', blank=True)
+    period = models.CharField(max_length=100, blank=True, default="")
+    time = models.CharField(max_length=100, blank=True, default="")
+    charge = models.CharField(max_length=100, blank=True, default="")
+    grade = models.CharField(max_length=100, blank=True, default="")
+    # referenceIdentifier = models.URLField(default="")
+    thumbnail = models.ImageField(
+        '대표이미지', upload_to='img_path', blank=True)
     tags = TaggableManager()
 
 

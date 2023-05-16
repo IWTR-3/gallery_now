@@ -3,24 +3,25 @@ from . import views
 
 app_name = 'posts'
 urlpatterns = [
-    
-    path('', views.index, name='index'),  # theme_list 조회
 
-    ## posts_list에서 theme로 명칭 변겅 ##
-    path('<int:theme_pk>', views.theme, name='theme'),  # theme detail 조회
-    
-    path('exhibition/<int:exhibition_pk>/', views.detail,
-         name='detail'),  # exhibition detail 조회
-    path('exhibition/<int:exhibition_pk>/review',
-         views.review_create, name='review_create'),  # review 작성
-    path('exhibition/<int:exhibition_pk>/review/<int:review_pk>/update/',
+    ## main features - post & theme ##
+    path('', views.index, name='index'),  # 모든 theme 조회
+    path('post-list/<int:theme_pk>', views.post_list,
+         name='post_list'),  # theme 상세
+    path('post/<int:post_pk>', views.detail, name='detail'),  # post detail 조회
+
+    ## like, visited ##
+    path('post/<int:post_pk>/like', views.like, name='like'),
+    path('post/<int:post_pk>/visited', views.visited, name='visited'),
+
+    ## review CRUD, like ##
+    path('post/<int:post_pk>/review', views.review, name='review'),  # review 작성
+    path('post/<int:post_pk>/review/<int:review_pk>/update',
          views.review_update, name='review_update'),  # review 수정
-    path('exhibition/<int:exhibition_pk>/review/<int:review_pk>/delete/',
+    path('post/<int:post_pk>/review/<int:review_pk>/delete',
          views.review_delete, name='review_delete'),  # review 삭제
 
-    # 예시 파일
-    path('theme2', views.theme2 , name='theme2'),
-    path('theme2/detail', views.detail2, name='detail2'),
+
 
 
     # 이하 관리자만 접근 가능한 url 목록
@@ -40,3 +41,6 @@ urlpatterns = [
 # <int:post_pk>/detail/<int:detail_pk>/reviews/<int:review_pk>/
 # <int:post_pk>/detail/<int:detail_pk>/reviews/<int:review_pk>/likes/
 # <int:post_pk>/detail/<int:detail_pk>/reviews/<int:review_pk>/update/
+## review CRUD, like ##
+## like, visited ##
+## main features - post & theme ##
