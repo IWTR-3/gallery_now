@@ -1,0 +1,30 @@
+{% for review in reviews %}
+<div class="container my-3" style="color:rgb(106, 106, 106);">
+    <hr>
+    <div class="d-flex gap-4 mt-2 ">
+        <!-- 프로필 이미지 -->
+        <a href="{% url 'accounts:profile' user.nickname %}">
+            {% if review.person.profile_image %}
+            <img src="{{ review.person.profile_image.url }}" alt="post_image" class="rounded-circle" width="50" height="50">
+            {% else %}
+            <img src="https://i.pinimg.com/564x/d2/98/4e/d2984ec4b65a8568eab3dc2b640fc58e.jpg" alt="no_image" class="rounded-circle" width="50" height="50">
+        </a>
+        <!-- 닉네임 -->
+        <span>
+            <span><b>{{ review.person.nickname }}nickname</b></span>
+            <div class="d-flex gap-3">
+                <!-- 팔로워 -->
+                <p>followers : <span id="followers-count">{{ review.person.followers.all|length }}</span>
+                </p>
+                <!-- 팔로잉 -->
+                <p>followings : <span id="followings-count">{{ review.person.followings.all|length }}</span>
+                </p>
+            </div>
+        </span>
+        {% endif %}
+    </div>
+    <!-- 리뷰 -->
+    <p>{{ review.content }}Lorem ipsum dolor, sit amet consectetur adipisicing elit. Recusandae, corporis! Laborum cupiditate fugiat, ullam iste sint esse beatae suscipit. Possimus mollitia qui recusandae libero non nulla sed voluptatum in architecto ratione. Ipsum sit laborum dolorem aliquid unde vero facilis praesentium minus molestiae non recusandae natus, delectus hic ipsam labore cum?</p>
+    <p class="text-end" style="font-size:7px">{{ review.updated_at }}2023-03-24</p>
+</div>
+{% endfor %}
