@@ -55,7 +55,7 @@
 </div>
 <hr>
 <!-- 전시 사진 내용 -->
-<div class="mt-5 text-center">
+<div class="my-5 text-center">
     <h5 class="mb-5">전시 정보</h5>
     <img class="detail_b_img"  src="https://art-map.co.kr/art-map/public/upload/2023/04/exhibition/8a0e457cf9726765c33232e9d0327a29_1BecomingaPlace12019Zelkova188.5x17.2x9.5cm.jpg" alt="">
     
@@ -69,6 +69,43 @@
     <p>오프닝 : 2023년 4월 20일 (목) 16시</p>
     <p>-</p>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit neque mollitia voluptate enim fugiat molestiae illum impedit hic. Quo amet, pariatur illum commodi ex magni vero rem sint praesentium exercitationem, dignissimos beatae dolores voluptates, asperiores quidem similique porro eligendi! Ut dolor, doloremque porro, sint vitae consectetur corporis nobis explicabo veniam amet accusamus! Assumenda eligendi doloribus ducimus reprehenderit, possimus mollitia commodi ullam libero fugiat architecto deserunt totam tempore, natus temporibus tenetur? Sed obcaecati reiciendis ea veniam explicabo cum eos quod ipsum soluta dolores vel doloremque sequi odit saepe exercitationem, possimus molestias quis amet delectus error. Officia excepturi soluta commodi, quidem perferendis, ipsa, cupiditate tenetur molestias omnis harum eius molestiae adipisci sit enim voluptas nihil nemo. Voluptatem delectus omnis architecto voluptate consectetur, quidem animi consequatur illo dolor odio, et repellendus. Blanditiis natus reprehenderit officiis pariatur nam doloremque incidunt, sed voluptates quod aspernatur exercitationem delectus ut corrupti repellat necessitatibus nemo repellendus animi architecto veritatis maiores corporis harum eius! Nisi minus, magni ex accusamus exercitationem, quibusdam earum est commodi expedita voluptatem, impedit maiores ducimus! Perspiciatis esse impedit vel? Distinctio, veritatis laborum saepe eum expedita nulla molestiae ea maxime vitae voluptatem impedit perspiciatis porro esse, ad veniam explicabo. Velit repellat aperiam adipisci sapiente quos eligendi ut. Deleniti vel perspiciatis tenetur quia impedit eveniet, minima animi nisi fuga similique voluptas. Deserunt ab animi doloribus, soluta odio laudantium iusto repudiandae ut quod harum quibusdam nihil ea, impedit assumenda dolorem distinctio qui velit labore adipisci temporibus esse commodi ad saepe. Fuga ratione, voluptas modi repudiandae veritatis soluta nam aspernatur optio atque repellendus at expedita fugiat quos numquam voluptatibus earum corporis sunt iusto alias labore accusamus incidunt? Fuga vitae cumque nemo odio illo at corporis, eos enim dicta rerum corrupti? At aliquam explicabo quasi suscipit quos ipsum illo magni nulla, voluptatem, facere similique minima fuga rem itaque nobis consequatur.</p>
+    <p class="my-4"><b>※ 아트맵에 등록된 이미지와 글의 저작권은 각 작가와 필자에게 있습니다.</b></p>
+</div>
+
+<hr>
+
+<!-- 리뷰 작성 -->
+<h2 class="text-center my-4" style="font-weight:bolder">REVIEW</h2>
+<div class="container my-3" style="color:rgb(106, 106, 106);">
+    <hr>
+    <div class="d-flex gap-4 mt-2 ">
+        {% if user.is_authenticated %}
+            <!-- 프로필 이미지 -->
+            <a href="{% url 'accounts:profile' user.nickname %}">
+                {% if person.profile_image %}
+                <img src="{{ person.profile_image.url }}" alt="post_image" class="rounded-circle" width="50" height="50">
+                {% else %}
+                <img src="https://i.pinimg.com/564x/d2/98/4e/d2984ec4b65a8568eab3dc2b640fc58e.jpg" alt="no_image" class="rounded-circle" width="50" height="50">
+            </a>
+            {% endif %}
+            <!-- 닉네임 -->
+            <span>
+                <span><b>{{ review.person.nickname }}nickname</b></span>
+                <div class="d-flex gap-3">
+                    <!-- 팔로워 -->
+                    <p>followers : <span id="followers-count">{{ person.followers.all|length }}</span>
+                    </p>
+                    <!-- 팔로잉 -->
+                    <p>followings : <span id="followings-count">{{ person.followings.all|length }}</span>
+                    </p>
+                </div>
+            </span>
+
+            {% endif %}
+        </div>
+        <!-- 리뷰 -->
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Recusandae, corporis! Laborum cupiditate fugiat, ullam iste sint esse beatae suscipit. Possimus mollitia qui recusandae libero non nulla sed voluptatum in architecto ratione. Ipsum sit laborum dolorem aliquid unde vero facilis praesentium minus molestiae non recusandae natus, delectus hic ipsam labore cum?</p>
+        <p class="text-end" style="font-size:7px">{{ review.updated_at }}2023-03-24</p>
 </div>
 
 {% endblock content %}
