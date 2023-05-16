@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.http import JsonResponse
-from .forms import CustomUserCreationForm, CustomUserChangeForm, LogInForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 # Create your views here.
 def profile(request, nickname):
@@ -41,12 +41,12 @@ def follow(request, user_pk):
 
 def login(request):
     if request.method == 'POST':
-        form = LogInForm(request, request.POST)
+        form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
             return redirect('posts:index')
     else:
-        form = LogInForm()
+        form = AuthenticationForm()
     context = {
         'form': form,
     }
