@@ -12,7 +12,7 @@ urlpatterns = [
     path('exhibition/<int:exhibition_pk>/', views.detail,
          name='detail'),  # exhibition detail 조회
     path('exhibition/<int:exhibition_pk>/review',
-         views.review, name='review'),  # review 작성
+         views.review_create, name='review_create'),  # review 작성
     path('exhibition/<int:exhibition_pk>/review/<int:review_pk>/update/',
          views.review_update, name='review_update'),  # review 수정
     path('exhibition/<int:exhibition_pk>/review/<int:review_pk>/delete/',
