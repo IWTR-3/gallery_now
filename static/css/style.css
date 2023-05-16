@@ -74,3 +74,13 @@
 .t_grey {
     color: grey;
 }
+
+.t_gray {
+    color: rgb(106, 106, 106);
+}
+
+.KSH {
+    background: linear-gradient(to right, rgb(188, 255, 140), rgb(108, 211, 255));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
