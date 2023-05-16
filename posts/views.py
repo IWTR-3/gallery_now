@@ -35,9 +35,10 @@ def detail(request, exhibition_pk):
     return render(request, 'posts/detail.html')
 
 
-# 임시 코드 
+# 임시 코드
 def theme2(request):
     return render(request, 'posts/theme2.html')
+
 
 def detail2(request):
 
