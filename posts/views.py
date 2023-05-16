@@ -20,7 +20,7 @@ def index(request):
 # 선택된 테마의 포함된 전시 리스트를 보여준다.
 
 
-def theme(request, theme_pk):
+def post_list(request, theme_pk):
     theme = Theme.objects.get(pk=theme_pk)
     context = {
         'theme': theme,
@@ -30,36 +30,51 @@ def theme(request, theme_pk):
 # 전시 detail 조회
 
 
-def detail(request, exhibition_pk):
+def detail(request, post_pk):
 
-    return render(request, 'posts/detail.html')
+    post = Exhibition.objects.get(pk=post_pk)
+
+    context = {
+        'post': post,
+    }
+
+    return render(request, 'posts/detail.html', context)
 
 
-# 임시 코드
-def theme2(request):
-    return render(request, 'posts/theme2.html')
+def like(request, post_pk):
+
+    post = Exhibition.objects.get(pk=post_pk)
+
+    return redirect('posts:detail', post_pk)
 
 
-def detail2(request):
+def visited(request, post_pk):
 
-    return render(request, 'posts/detail.html')
+    post = Exhibition.objects.get(pk=post_pk)
 
+    return redirect('posts:detail', post_pk)
 
 # 리뷰 C
-def review(request, exhibition_pk):
-    return redirect('posts:detail', exhibition_pk)
+
+
+def review(request, post_pk):
+    return redirect('posts:detail', post_pk)
 
 # 리뷰 U
 
 
-def review_update(request, exhibition_pk, review_pk):
-    return redirect('posts:detail', exhibition_pk)
+def review_update(request, post_pk, review_pk):
+    return redirect('posts:detail', post_pk)
 
 # 리뷰 D
 
 
-def review_delete(request, exhibition_pk, review_pk):
-    return redirect('posts:detail', exhibition_pk)
+def review_delete(request, post_pk, review_pk):
+    return redirect('posts:detail', post_pk)
+
+
+def review_like(request, post_pk, review_pk):
+    return redirect('posts:detail', post_pk)
 
 
 @login_required
@@ -68,20 +83,6 @@ def create_theme(request):
     context = {}
 
     return render(request, 'posts/test/create_theme.html', context)
-
-
-@login_required
-def update_theme(request, post_pk):
-    context = {}
-    return render(request, 'posts/test/update_theme.html', context)
-
-
-@login_required
-def delete_theme(request, post_pk):
-
-    context = {}
-
-    return redirect('posts:index')
 
 
 @login_required

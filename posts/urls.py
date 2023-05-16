@@ -40,3 +40,6 @@ urlpatterns = [
 # <int:post_pk>/detail/<int:detail_pk>/reviews/<int:review_pk>/
 # <int:post_pk>/detail/<int:detail_pk>/reviews/<int:review_pk>/likes/
 # <int:post_pk>/detail/<int:detail_pk>/reviews/<int:review_pk>/update/
+## review CRUD, like ##
+## like, visited ##
+## main features - post & theme ##

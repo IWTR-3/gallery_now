@@ -43,13 +43,13 @@ class Exhibition(models.Model):
               'grade', ]  # 'thumbnail'
 
     def img_path(instance):
-        return f'posts/thumbnails/{instance.pk}.jpg'
+        return f'posts/thumbnails/'
 
     title = models.CharField(max_length=100)
-    period = models.CharField(max_length=100, null=True)
-    time = models.CharField(max_length=100, null=True)
-    charge = models.CharField(max_length=100, null=True)
-    grade = models.CharField(max_length=100, null=True)
+    period = models.CharField(max_length=100, blank=True, default="")
+    time = models.CharField(max_length=100, blank=True, default="")
+    charge = models.CharField(max_length=100, blank=True, default="")
+    grade = models.CharField(max_length=100, blank=True, default="")
     # referenceIdentifier = models.URLField(default="")
     thumbnail = models.ImageField(
         '대표이미지', upload_to='img_path', blank=True)
