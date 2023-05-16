@@ -3,10 +3,12 @@ from . import views
 
 app_name = 'posts'
 urlpatterns = [
-
+    
     path('', views.index, name='index'),  # theme_list 조회
-    path('<int:theme_pk>', views.theme, name='theme'),  # theme detail 조회
 
+    ## posts_list에서 theme로 명칭 변겅 ##
+    path('<int:theme_pk>', views.theme, name='theme'),  # theme detail 조회
+    
     path('exhibition/<int:exhibition_pk>/', views.detail,
          name='detail'),  # exhibition detail 조회
     path('exhibition/<int:exhibition_pk>/review',
@@ -15,6 +17,9 @@ urlpatterns = [
          views.review_update, name='review_update'),  # review 수정
     path('exhibition/<int:exhibition_pk>/review/<int:review_pk>/delete/',
          views.review_delete, name='review_delete'),  # review 삭제
+
+    path('theme2', views.theme2 , name='theme2'),
+    path('theme2/detail', views.detail2, name='detail2'),
 
     # 이하 관리자만 접근 가능한 url 목록
     path('staff/', views.staff, name='staff'),
