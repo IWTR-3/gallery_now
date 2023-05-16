@@ -1,6 +1,11 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.conf import settings
+from taggit.managers import TaggableManager  # 👈 for taggit
+from taggit.models import (
+    TagBase,
+    TaggedItemBase
+)
 
 
 class Gallery(models.Model):
@@ -42,8 +47,9 @@ class Exhibition(models.Model):
     time = models.CharField(max_length=100, null=True)
     charge = models.CharField(max_length=100, null=True)
     grade = models.CharField(max_length=100, null=True)
-    referenceIdentifier = models.CharField(max_length=100, null=True)
-    # thumbnail = models.ImageField(null=True)
+    referenceIdentifier = models.URLField(default="#")
+    thumbnail = models.ImageField('대표이미지', upload_to='thumbnails/', blank=True)
+    tags = TaggableManager()
 
 
 class Review(models.Model):
