@@ -3,40 +3,49 @@
 {% block content %}
   <div class="border-top">
     <div class="mt-5">
-      <div class="container d-flex flex-column justify-content-center align-items-center">
-        <p>2023-05-01</p>
-        <div class="d-flex align-items-center mb-4">
-          <h1>5월 추천 전시회</h1>
-          <span class="material-symbols-outlined ms-2 text-secondary">
-            share
-          </span>
+      {% comment %} {% for info in theme %} {% endcomment %}
+      <!-- 테마 정보 상자 -->
+        <div class="container d-flex flex-column justify-content-center align-items-center">
+          <p>2023-05-01</p>
+          <div class="d-flex align-items-center mb-4">
+            <!-- 테마 제목 -->
+            <h1>{{ theme.title }}</h1>
+            <span class="material-symbols-outlined ms-2 text-secondary">
+              share
+            </span>
+          </div>
+          <!-- 디스크립션 내용 -->
+          <p class="text-secondary">{{ theme.description }}</p>
+          <div class="circle mt-3 mb-5 "></div>
         </div>
-        <p class="text-secondary">5월에는 어떤 전시회들이 기다리고 있을까요?</p>
-        <div class="circle mt-3 mb-5 "></div>
-      </div>
-
-      {% for post in theme.exhibitions.all %}
-      <a class="tag_a" href="{% url 'posts:detail' post.pk %}">
-        <div class="container-sm d-flex flex-column justify-content-center align-items-center">
-          <div class="row">
-            <div class="col-lg-6 text-center ">
-              <img class="theme_img " src="https://art-map.co.kr/art-map/public/upload/2023/04/exhibition/8a0e457cf9726765c33232e9d0327a29_1BecomingaPlace12019Zelkova188.5x17.2x9.5cm.jpg" alt="">
-            </div>
-            <div class="col-lg-6">
-              <p class="mt-5 text-lg-start text-center" style="font-size:30px; font-weight: 400;">최인수 : 물질의 서사</p>
-              <div class="">
-                <p class="text-lg-start text-center">장소 : 데이트갤러리/부산</p>
-                <p class="text-lg-start text-center">주소 : 부산 해운대구 해운대변로298번길 5/2F</p>
-                <p class="text-lg-start text-center">기간 : 2023-04-20 ~ 2023-05-30</p>
+      {% comment %} {% endfor %} {% endcomment %}
+      
+      {% for post_list in theme.exhibitions.all %}
+      <!-- 각 전시회 내용 및 링크 -->
+        <a class="tag_a" href="{% url 'posts:detail' post_list.pk %}">
+          <div class="container-sm d-flex flex-column justify-content-center align-items-center">
+            <div class="row">
+              <!-- 전시회 대표 이미지(포스터) -->
+              <div class="col-lg-6 text-center ">
+                <img class="theme_img " src="{{ post_list.thumbnail }}" alt="">
               </div>
-              <p class="over_text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur aut aliquid corrupti suscipit possimus nisi voluptate omnis perferendis consectetur beatae incidunt unde, optio nostrum nulla est voluptatum ipsam vel et.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur aut aliquid corrupti suscipit possimus nisi voluptate omnis perferendis consectetur beatae incidunt unde, optio nostrum nulla est voluptatum ipsam vel et.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur aut aliquid corrupti suscipit possimus nisi voluptate omnis perferendis consectetur beatae incidunt unde, optio nostrum nulla est voluptatum ipsam vel et.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur aut aliquid corrupti suscipit possimus nisi voluptate omnis perferendis consectetur beatae incidunt unde, optio nostrum nulla est voluptatum ipsam vel et.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur aut aliquid corrupti suscipit possimus nisi voluptate omnis perferendis consectetur beatae incidunt unde, optio nostrum nulla est voluptatum ipsam vel et.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur aut aliquid corrupti suscipit possimus nisi voluptate omnis perferendis consectetur beatae incidunt unde, optio nostrum nulla est voluptatum ipsam vel et.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur aut aliquid corrupti suscipit possimus nisi voluptate omnis perferendis consectetur beatae incidunt unde, optio nostrum nulla est voluptatum ipsam vel et.</p>
+              <!-- 정보(장소, 주소, 기간) -->
+              <div class="col-lg-6">
+                <p class="mt-5 text-lg-start text-center" style="font-size:30px; font-weight: 400;">{{ post_list.title }}</p>
+                <div class="">
+                  <p class="text-lg-start text-center">장소 : {{ post_list.venue }}</p>
+                  <p class="text-lg-start text-center">주소 : {{ post_list.address }}</p>
+                  <p class="text-lg-start text-center">기간 : {{ post_list.time }}</p>
+                </div>
+                <!-- 상세 설명문 -->
+                <p class="over_text">{{ post.description }}</p>
             </div>
           </div>
         </div>
       </a>
-      {% endfor %}
-      <hr>
-    </div>
+    {% endfor %}
+    <hr>
   </div>
+</div>
 
 {% endblock content %}

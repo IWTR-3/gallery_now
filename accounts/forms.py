@@ -29,7 +29,16 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ('email', 'nickname') 
 
 class CustomUserChangeForm(UserChangeForm):
+    email = forms.EmailField(
+        label='이메일',
+        widget=forms.TextInput(
+            attrs={'class': 'form-control',}),)
+    nickname = forms.CharField(
+        label='닉네임',
+        widget= forms.TextInput(
+            attrs={'class': 'form-control',}),)
     profile_image = ProcessedImageField(
+        label='프로필 이미지',
         spec_id='profile_image_thumbnail',
         processors=[ResizeToFill(70,70)],
         format='JPEG',
@@ -37,9 +46,11 @@ class CustomUserChangeForm(UserChangeForm):
         required=False,
         widget=ClearableFileInput(
         attrs={
+            'class': 'form-control'
         }
         ),
     )
+    password = None
     class Meta(UserChangeForm.Meta):
         model = get_user_model()
         fields = ('email', 'nickname', 'profile_image',)
