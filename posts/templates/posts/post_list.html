@@ -15,7 +15,8 @@
         <div class="circle mt-3 mb-5 "></div>
       </div>
 
-      <a class="tag_a" href="{% url 'posts:detail2' %}">
+      {% for post in theme.exhibitions.all %}
+      <a class="tag_a" href="{% url 'posts:detail' post.pk %}">
         <div class="container-sm d-flex flex-column justify-content-center align-items-center">
           <div class="row">
             <div class="col-lg-6 text-center ">
@@ -33,6 +34,7 @@
           </div>
         </div>
       </a>
+      {% endfor %}
       <hr>
     </div>
   </div>
