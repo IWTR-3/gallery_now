@@ -75,7 +75,15 @@
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit neque mollitia voluptate enim fugiat molestiae illum impedit hic. Quo amet, pariatur illum commodi ex magni vero rem sint praesentium exercitationem, dignissimos beatae dolores voluptates, asperiores quidem similique porro eligendi! Ut dolor, doloremque porro, sint vitae consectetur corporis nobis explicabo veniam amet accusamus! Assumenda eligendi doloribus ducimus reprehenderit, possimus mollitia commodi ullam libero fugiat architecto deserunt totam tempore, natus temporibus tenetur? Sed obcaecati reiciendis ea veniam explicabo cum eos quod ipsum soluta dolores vel doloremque sequi odit saepe exercitationem, possimus molestias quis amet delectus error. Officia excepturi soluta commodi, quidem perferendis, ipsa, cupiditate tenetur molestias omnis harum eius molestiae adipisci sit enim voluptas nihil nemo. Voluptatem delectus omnis architecto voluptate consectetur, quidem animi consequatur illo dolor odio, et repellendus. Blanditiis natus reprehenderit officiis pariatur nam doloremque incidunt, sed voluptates quod aspernatur exercitationem delectus ut corrupti repellat necessitatibus nemo repellendus animi architecto veritatis maiores corporis harum eius! Nisi minus, magni ex accusamus exercitationem, quibusdam earum est commodi expedita voluptatem, impedit maiores ducimus! Perspiciatis esse impedit vel? Distinctio, veritatis laborum saepe eum expedita nulla molestiae ea maxime vitae voluptatem impedit perspiciatis porro esse, ad veniam explicabo. Velit repellat aperiam adipisci sapiente quos eligendi ut. Deleniti vel perspiciatis tenetur quia impedit eveniet, minima animi nisi fuga similique voluptas. Deserunt ab animi doloribus, soluta odio laudantium iusto repudiandae ut quod harum quibusdam nihil ea, impedit assumenda dolorem distinctio qui velit labore adipisci temporibus esse commodi ad saepe. Fuga ratione, voluptas modi repudiandae veritatis soluta nam aspernatur optio atque repellendus at expedita fugiat quos numquam voluptatibus earum corporis sunt iusto alias labore accusamus incidunt? Fuga vitae cumque nemo odio illo at corporis, eos enim dicta rerum corrupti? At aliquam explicabo quasi suscipit quos ipsum illo magni nulla, voluptatem, facere similique minima fuga rem itaque nobis consequatur.</p>
     <p class="my-4"><b>※ 아트맵에 등록된 이미지와 글의 저작권은 각 작가와 필자에게 있습니다.</b></p>
 </div>
-
+<form action="{% url 'posts:like' post.pk %}" method="POST">
+    {% csrf_token %}
+    {% if request.user in post.like_users.all %}
+        <input type="submit" value="좋아요 취소">
+    {% else %}
+        <input type="submit" value="좋아요">
+    {% endif %}
+</form>
+<p>좋아요 수: {{ post.like_users.count }}</p>
 <hr>
 
 <!-- 리뷰 작성 및 조회 -->
@@ -107,7 +115,7 @@
     {% endif %}
     {{ review.user }} = {{ review.content }}
     {% if review.user == user %}
-        <form action="{% url 'posts:review_likes' post.pk review.pk %}" method="POST">
+        <form action="{% url 'posts:review_like' post.pk review.pk %}" method="POST">
             {% csrf_token %}
             {% if request.user in review.like_users.all %}
             <input type="submit" value="좋아요 취소">

@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from posts.models import Theme, Exhibition, Review, Artist, Gallery
 from posts import api
 from .forms import ReviewForm
+from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 
 # Create your views here.
@@ -40,8 +41,24 @@ def detail(request, post_pk):
 
 
 def like(request, post_pk):
-    post = Exhibition.objects.get(pk=post_pk)
-    return redirect('posts:detail', post_pk)
+    exhibition = get_object_or_404(Exhibition, pk=post_pk)
+    is_liked = False
+
+    if request.user.is_authenticated:
+        if exhibition.like_users.filter(pk=request.user.pk).exists():
+            exhibition.like_users.remove(request.user)
+        else:
+            exhibition.like_users.add(request.user)
+            is_liked = True
+    else:
+        return JsonResponse({'message': '로그인이 필요합니다.'})
+
+    context = {
+        'is_liked': is_liked,
+    }
+    return JsonResponse(context)
+
+
 
 
 def visited(request, post_pk):
