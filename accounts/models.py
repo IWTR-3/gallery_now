@@ -38,7 +38,6 @@ class User(AbstractBaseUser):
     # MTM fields
     followings = models.ManyToManyField('self', related_name='followers', symmetrical=False)
     like_exhibitions = models.ManyToManyField(Exhibition, related_name='like_users')
-    like_reviews = models.ManyToManyField(Review, related_name='like_users')
     visited_exhibitions = models.ManyToManyField(Exhibition, related_name='visited_users')
    
     # status field
