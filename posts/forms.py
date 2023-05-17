@@ -12,6 +12,8 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = '__all__'
+        fields = ('content', 'star')
+
 
 
 class ArtistForm(forms.ModelForm):

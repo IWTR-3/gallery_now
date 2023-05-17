@@ -38,14 +38,11 @@ class User(AbstractBaseUser):
     password = models.CharField(max_length=128)
 
     # MTM fields
-    followings = models.ManyToManyField(
-        'self', blank=True, related_name='followers', symmetrical=False)
-    like_exhibitions = models.ManyToManyField(
-        Exhibition, blank=True, related_name='like_users')
-    like_reviews = models.ManyToManyField(
-        Review, blank=True, related_name='like_users')
-    visited_exhibitions = models.ManyToManyField(
-        Exhibition, blank=True, related_name='visited_users')
+
+    followings = models.ManyToManyField('self', related_name='followers', symmetrical=False)
+    like_exhibitions = models.ManyToManyField(Exhibition, related_name='like_users')
+    visited_exhibitions = models.ManyToManyField(Exhibition, related_name='visited_users')
+
 
     # status field
     is_active = models.BooleanField(default=True)

@@ -76,12 +76,46 @@
 
 <hr>
 
-<!-- 리뷰 작성 -->
+<!-- 리뷰 작성 및 조회 -->
 <div class="container d-block">
     <h2 class="text-center mt-4" style="font-weight:bolder">REVIEW</h2>
     {% comment %} <p class="text-end m-0 p-o">{{ reviews.all|length }}</p> {% endcomment %}
+    <form action="{% url 'posts:review_create' post.pk %}" method="POST">
+        {% csrf_token %}
+        {{ review_form }}
+        <input type="submit" value="리뷰">
+        </div>
+    </form>
 </div>
+{% comment %} 리뷰 삭제 {% endcomment %}
+{% for review in reviews %}
+    {% if review.user == user %}
+        <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="삭제" onclick="return confirm('삭제 하시겠습니까?')">
+        </form>
+    {% endif %}
 
+    {% if review.user == user %}
+        <form action="{% url 'posts:review_update' post.pk review.pk %}" method="POST">
+            {% csrf_token %}
+            {{ review_form.as_p }}
+            <input type="submit" value="수정">
+        </form>
+    {% endif %}
+    {{ review.user }} = {{ review.content }}
+    {% if review.user == user %}
+        <form action="{% url 'posts:review_likes' post.pk review.pk %}" method="POST">
+            {% csrf_token %}
+            {% if request.user in review.like_users.all %}
+            <input type="submit" value="좋아요 취소">
+            {% else %}
+            <input type="submit" value="좋아요">
+            {% endif %}
+        </form>
+    {% endif %}    
+
+{% endfor %}
 {% include 'posts/review.html' %}
 
 {% endblock content %}
