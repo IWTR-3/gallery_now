@@ -107,13 +107,9 @@
         <div>
           {% for review in person.review_set.all %}
             <div class="card">
-              <h5 class="card-title">
-                {{ review.review | truncatewords : 40 }}
-              </h5>
+              <h5 class="card-title"></h5>
               <br>
-              <div class="card-body">
-                {{ review. }}
-              </div>
+              <div class="card-body"></div>
             </div>
           {% endfor %}
         </div>
