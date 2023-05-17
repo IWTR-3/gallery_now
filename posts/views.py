@@ -104,7 +104,7 @@ def review_delete(request, post_pk, review_pk):
 
 
 @login_required
-def review_likes(request, post_pk, review_pk):
+def review_like(request, post_pk, review_pk):
     review = Review.objects.get(pk=review_pk)
 
     if request.user in review.like_users.all():

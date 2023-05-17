@@ -23,24 +23,24 @@ def update():
         """
         api 에서 xml 가져오기
         """
-        # print(" message : update page", pageNo)
+        print(" message : update page", pageNo)
 
-        # params = {'serviceKey': serviceKey, 'numOfRows': str(
-        #     numOfRows), 'pageNo': str(pageNo), }
+        params = {'serviceKey': serviceKey, 'numOfRows': str(
+            numOfRows), 'pageNo': str(pageNo), }
 
-        # response = requests.get(url, params=params)
-        # xml = response.text
+        response = requests.get(url, params=params)
+        xml = response.text
 
-        # savePath = f'./page_{pageNo}.xml'
-        # f = open(savePath, "w")
-        # f.write(xml)
+        savePath = f'./page_{pageNo}.xml'
+        f = open(savePath, "w")
+        f.write(xml)
 
         """
         저장해 둔 xml 파일 사용
         """
-        savePath = f'./page_{pageNo}.xml'
-        f = open(savePath, "r")
-        xml = f.read()
+        # savePath = f'./page_{pageNo}.xml'
+        # f = open(savePath, "r")
+        # xml = f.read()
 
         soup = BeautifulSoup(xml, 'html.parser')
 
