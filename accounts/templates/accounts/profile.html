@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}
   Profile
 {% endblock title %}
@@ -41,11 +42,11 @@
     </h1>
 
     <!-- 팔로워/팔로잉 수 -->
-    <div class="text-center">
-      <span id="followers-count">팔로워
+    <div class="text-center">팔로워
+      <span id="followers-count">
         {{ person.followers.all|length }}</span>
-      <span>/</span>
-      <span id="followings-count">팔로잉
+      <span>/</span>팔로잉
+      <span id="followings-count">
         {{ person.followings.all|length }}</span>
     </div>
 
@@ -53,7 +54,7 @@
     <!-- 본인 프로필 : 회원정보 수정 버튼 -->
     <div class="text-center mt-3">
       {% if request.user.is_authenticated %}
-        {% if user.username != person.username %}
+        {% if user.nickname != person.nickname %}
           <form class="mt-2" id="follow-form" data-user-id="{{ person.pk }}">
             {% csrf_token %}
             {% if request.user in person.followers.all %}
@@ -92,11 +93,42 @@
         <h2>전시회</h2>
         <hr>
         <div class="row">
-          <div class="col">
+          <div class="col-lg-6">
             <h4>좋아요한 전시회</h4>
+            {% for exhibition in person.like_exhibitions.all %}
+              <div class="my-4">
+                <a class="tag_a row" href="{% url 'posts:detail' exhibition.pk %}">
+                  <div class="col-3" style="height: 150px;">
+                    <img src="{{ exhibition.thumbnail.url }}" alt="exhibition_img" style="margin:auto;" enctype="multipart/form-data" height="150px">
+                  </div>
+                  <div class="col-9">
+                    <div class="mt-4 text-start pb-1" style="font-size:20px; font-weight: 300;">{{ exhibition.title }}</div>
+                    <div class="text-secondary text-start pt-1" style="font-size:15px;">일정 :{{ exhibition.period }}</div>
+                    <div class="text-secondary text-start pt-1" style="font-size:15px;">시간 :{{ exhibition.time }}</div>
+                  </div>
+                </a>
+              </div>
+              <hr>
+              {% comment %} <hr class="mx-auto text-secondary" style="width:95%;"> {% endcomment %}
+            {% endfor %}
           </div>
-          <div class="col">
+          <div class="col-lg-6">
             <h4>다녀온 전시회</h4>
+            {% for exhibition in person.visited_exhibitions.all %}
+              <div class="my-4">
+                <a class="tag_a row" href="{% url 'posts:detail' exhibition.pk %}">
+                  <div class="col-3" style="height: 150px;">
+                    <img src="{{ exhibition.thumbnail.url }}" alt="exhibition_img" style="margin:auto;" enctype="multipart/form-data" height="150px">
+                  </div>
+                  <div class="col-9">
+                    <div class="mt-4 text-start pb-1" style="font-size:20px; font-weight: 300;">{{ exhibition.title }}</div>
+                    <div class="text-secondary text-start pt-1" style="font-size:15px;">일정 :{{ exhibition.period }}</div>
+                    <div class="text-secondary text-start pt-1" style="font-size:15px;">시간 :{{ exhibition.time }}</div>
+                  </div>
+                </a>
+              </div>
+              <hr>
+            {% endfor %}
           </div>
         </div>
       </div>
@@ -104,28 +136,39 @@
       <div class="tab-pane fade" id="Review-tab-pane" role="tabpanel" aria-labelledby="Review-tab" tabindex="0">
         <h4>나의 리뷰</h4>
         <hr>
-        <div>
           {% for review in person.review_set.all %}
-            <div class="card">
-              <h5 class="card-title"></h5>
-              <br>
-              <div class="card-body"></div>
+            <div class="my-4">
+              <a class="tag_a row" href="{% url 'posts:detail' review.exhibition.pk %}">
+                <div class="col-3" style="height: 150px;">
+                  <img src="{{ review.exhibition.thumbnail.url }}" alt="exhibition_img" style="margin:auto;" enctype="multipart/form-data" height="150px">
+                </div>
+                <div class="col-9">
+                  <div class="mt-4 text-start pb-1" style="font-size:20px; font-weight: 300;">{{ review.exhibition.title }}</div>
+                  <div class="text-secondary text-start pt-1" style="font-size:15px;">일정 :{{ review.exhibition.period }}</div>
+                  <div class="text-secondary text-start pt-1" style="font-size:15px;">시간 :{{ review.exhibition.time }}</div>
+                </div>
+              </a>
             </div>
+            <hr>
           {% endfor %}
-        </div>
       </div>
       <!-- followings -->
       <div class="tab-pane fade" id="followings-tab-pane" role="tabpanel" aria-labelledby="followings-tab" tabindex="0">
         <h4>팔로잉 목록</h4>
         <hr>
         <div>
+          <div class="d-flex flex-wrap">
           {% for followings in person.followings.all %}
-            <p>
-              <a href="{% url 'accounts:profile' following.username %}">
-                {{ followings.username }}
+            <a class="tag_a card border-dark text-center px-2 py-1 m-2" href="{% url 'accounts:profile' followings.nickname %}" style="height: auto;">
+                {{ followings.nickname }}
+                {% comment %} {% if person in followings.followers.all %}
+                🩷
+                {% else %}
+                🤍
+                {% endif %} {% endcomment %}
               </a>
-            </p>
-          {% endfor %}
+              {% endfor %}
+            </div>
         </div>
       </div>
       <!-- Artist -->
@@ -141,6 +184,8 @@
 {% endblock content %}
 
 {% block script %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'js/profile.js' %}"></script>
   <script>
     const triggerTabList = document
       .querySelectorAll('#myTab button')triggerTabList
