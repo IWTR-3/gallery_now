@@ -1,7 +1,19 @@
-<title>회원정보수정</title>
-<h1>회원정보 수정</h1>
-<form action="{% url 'accounts:update' %}" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit">
-</form>
+{% extends 'base.html' %}
+{% block title %}
+  Profile update
+{% endblock title %}
+{% block content %}
+  <div class="container">
+    <h1 class="mt-5 text-center">회원정보 수정</h1>
+    <hr>
+    <div class="mx-auto mt-5 d-flex justify-content-center" style="width: 700px;">
+      <form action="{% url 'accounts:update' %}" method="POST" enctype="multipart/form-data" class="d-grid w-50 gap-2">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="d-grid gap-2">
+          <input type="submit" value="Update" class="btn btn-dark border-radius p-2">
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock content %}

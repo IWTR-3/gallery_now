@@ -69,19 +69,19 @@
     </div>
     <hr>
 
-    <!-- navbar : Exhibition | Artist | Gallery | Review -->
+    <!-- navbar : Exhibition | Artist | followings | Review -->
     <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
         <button class="nav-link active" id="Exhibition-tab" data-bs-toggle="tab" data-bs-target="#Exhibition-tab-pane" type="button" role="tab" aria-controls="Exhibition-tab-pane" aria-selected="true" style="text-decoration-line:none; color: black;">Exhibition</button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" id="Artis-tab" data-bs-toggle="tab" data-bs-target="#Artis-tab-pane" type="button" role="tab" aria-controls="Artis-tab-pane" aria-selected="false" style="text-decoration-line:none; color: black;">Artist</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="Gallery-tab" data-bs-toggle="tab" data-bs-target="#Gallery-tab-pane" type="button" role="tab" aria-controls="Gallery-tab-pane" aria-selected="false" style="text-decoration-line:none; color: black;">Gallery</button>
-      </li>
-      <li class="nav-item" role="presentation">
         <button class="nav-link" id="Review-tab" data-bs-toggle="tab" data-bs-target="#Review-tab-pane" type="button" role="tab" aria-controls="Review-tab-pane" aria-selected="false" style="text-decoration-line:none; color: black;">Review</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="followings-tab" data-bs-toggle="tab" data-bs-target="#followings-tab-pane" type="button" role="tab" aria-controls="followings-tab-pane" aria-selected="false" style="text-decoration-line:none; color: black;">followings</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="Artis-tab" data-bs-toggle="tab" data-bs-target="#Artis-tab-pane" type="button" role="tab" aria-controls="Artis-tab-pane" aria-selected="false" style="text-decoration-line:none; color: black;">Artist</button>
       </li>
     </ul>
 
@@ -89,43 +89,57 @@
     <div class="tab-content mt-5" id="myTabContent">
       <!-- Exhibition -->
       <div class="tab-pane fade show active" id="Exhibition-tab-pane" role="tabpanel" aria-labelledby="Exhibition-tab" tabindex="0">
-        <h2>나의 전시회</h2>
+        <h2>전시회</h2>
         <hr>
         <div class="row">
-          <div class="col-4">
+          <div class="col">
+            <h4>좋아요한 전시회</h4>
+          </div>
+          <div class="col">
             <h4>다녀온 전시회</h4>
           </div>
-          <div class="col-4">
-            <h4>가고싶은 전시회</h4>
-          </div>
-          <div class="col-4">
-            <h4>좋아요 표시한 전시회</h4>
-          </div>
+        </div>
+      </div>
+      <!-- Review -->
+      <div class="tab-pane fade" id="Review-tab-pane" role="tabpanel" aria-labelledby="Review-tab" tabindex="0">
+        <h4>나의 리뷰</h4>
+        <hr>
+        <div>
+          {% for review in person.review_set.all %}
+            <div class="card">
+              <h5 class="card-title"></h5>
+              <br>
+              <div class="card-body"></div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <!-- followings -->
+      <div class="tab-pane fade" id="followings-tab-pane" role="tabpanel" aria-labelledby="followings-tab" tabindex="0">
+        <h4>팔로잉 목록</h4>
+        <hr>
+        <div>
+          {% for followings in person.followings.all %}
+            <p>
+              <a href="{% url 'accounts:profile' following.username %}">
+                {{ followings.username }}
+              </a>
+            </p>
+          {% endfor %}
         </div>
       </div>
       <!-- Artist -->
       <div class="tab-pane fade" id="Artis-tab-pane" role="tabpanel" aria-labelledby="Artis-tab" tabindex="0">
-        <div>
-          <h4>선호하는 작가</h4>
-        </div>
-      </div>
-      <!-- Gallery -->
-      <div class="tab-pane fade" id="Gallery-tab-pane" role="tabpanel" aria-labelledby="Gallery-tab" tabindex="0">
-        <h4>갤러리 북마크</h4>
+        <h4>선호하는 작가</h4>
+        <hr>
         <div></div>
-      </div>
-      <!-- Review -->
-      <div class="tab-pane fade" id="Review-tab-pane" role="tabpanel" aria-labelledby="Review-tab" tabindex="0">
-        <!-- Review -->
-        <div>
-          <h4>나의 리뷰</h4>
-        </div>
       </div>
       <!-- navbar : content end -->
     </div>
 
   </div>
 {% endblock content %}
+
 {% block script %}
   <script>
     const triggerTabList = document
