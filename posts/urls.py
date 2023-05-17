@@ -15,7 +15,7 @@ urlpatterns = [
     path('post/<int:post_pk>/visited', views.visited, name='visited'),
 
     ## review CRUD, like ##
-    path('post/<int:post_pk>/review', views.review, name='review'),  # review 작성
+    path('post/<int:post_pk>/review', views.review_create, name='review_create'),  # review 작성
     path('post/<int:post_pk>/review/<int:review_pk>/update',
          views.review_update, name='review_update'),  # review 수정
     path('post/<int:post_pk>/review/<int:review_pk>/delete',
