@@ -23,29 +23,26 @@
       {% for post_list in theme.exhibitions.all %}
       <!-- 각 전시회 내용 및 링크 -->
         <a class="tag_a" href="{% url 'posts:detail' post_list.pk %}">
-          <div class="container-sm d-flex flex-column justify-content-center align-items-center">
+          <div class="container my-5">
             <div class="row">
-              <!-- 전시회 대표 이미지(포스터) -->
-              <div class="col-lg-6 text-center ">
-                <img class="theme_img " src="{{ post_list.thumbnail }}" alt="">
+              <div class="col-lg-5 d-flex align-items-center justify-content-center">
+                <!-- 전시회 대표 이미지(포스터) -->
+                <img class="theme_img" src="{{ post_list.thumbnail.url }}" alt="theme_img" enctype="multipart/form-data">              
               </div>
-              <!-- 정보(장소, 주소, 기간) -->
-              <div class="col-lg-6">
-                <p class="mt-5 text-lg-start text-center" style="font-size:30px; font-weight: 400;">{{ post_list.title }}</p>
-                <div class="">
-                  <p class="text-lg-start text-center">장소 : {{ post_list.venue }}</p>
-                  <p class="text-lg-start text-center">주소 : {{ post_list.address }}</p>
-                  <p class="text-lg-start text-center">기간 : {{ post_list.time }}</p>
-                </div>
+              <div class="col-lg-7">
+                <p class="text-lg-start text-center">{{ post_list.title }}</p>
+                <p class="text-lg-start text-center">장소 : {{ post_list.venue }}</p>
+                <p class="text-lg-start text-center">주소 : {{ post_list.address }}</p>
+                <p class="text-lg-start text-center">기간 : {{ post_list.time }}</p>
                 <!-- 상세 설명문 -->
-                <p class="over_text">{{ post.description }}</p>
+                <p class="over_text">{{ post.description }}asdasdadadasd</p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
-    {% endfor %}
-    <hr>
+          <hr class="mx-auto" style="width:95%;">
+        </a>
+      {% endfor %}
+    </div>
   </div>
-</div>
 
 {% endblock content %}

@@ -89,3 +89,12 @@
     -webkit-text-fill-color: transparent;
 }
 
+@media (max-width: 768px) {
+    .container-lg {
+      flex-direction: column;
+    }
+  
+    .border {
+      margin-bottom: 20px;
+    }
+  }
