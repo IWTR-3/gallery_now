@@ -1,61 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container-lg mt-5 ">
+  <div class="container-lg mt-5 ">
     <div class="row">
+      {% for theme in theme_list %}
         <div class="d-flex flex-column justify-content-center align-items-center col-xl-4 col-lg-6 col-md-6 col-12 mb-5">
-            <a href="{% url 'posts:theme2' %}" class="tag_crop tag_a">
-                <img class="tag_img" src="https://wc.wallpaperuse.com/wallp/27-272315_s.jpg" alt="theme_imag">
-                <span class="tag_text">예시 텍스트</span>
-                <p class="mt-1">5월에는 어떤 전시회들이 기다리고 있을까요?</p>
-            </a>
-        </div> 
-        <div class="d-flex flex-column justify-content-center align-items-center col-xl-4 col-lg-6 col-md-6 col-12 mb-5">
-            <a href="{% url 'posts:theme2' %}" class="tag_crop tag_a">
-                <img class="tag_img" src="https://wc.wallpaperuse.com/wallp/27-272315_s.jpg" alt="theme_imag">
-                <span class="tag_text">예시 텍스트</span>
-                <p class="mt-1">5월에는 어떤 전시회들이 기다리고 있을까요?</p>
-            </a>
-        </div> 
-        <div class="d-flex flex-column justify-content-center align-items-center col-xl-4 col-lg-6 col-md-6 col-12 mb-5">
-            <a href="{% url 'posts:theme2' %}" class="tag_crop tag_a">
-                <img class="tag_img" src="https://wc.wallpaperuse.com/wallp/27-272315_s.jpg" alt="theme_imag">
-                <span class="tag_text">예시 텍스트</span>
-                <p class="mt-1">5월에는 어떤 전시회들이 기다리고 있을까요?</p>
-            </a>
-        </div> 
-        <div class="d-flex flex-column justify-content-center align-items-center col-xl-4 col-lg-6 col-md-6 col-12 mb-5">
-            <a href="{% url 'posts:theme2' %}" class="tag_crop tag_a">
-                <img class="tag_img" src="https://wc.wallpaperuse.com/wallp/27-272315_s.jpg" alt="theme_imag">
-                <span class="tag_text">예시 텍스트</span>
-                <p class="mt-1">5월에는 어떤 전시회들이 기다리고 있을까요?</p>
-            </a>
-        </div> 
-        <div class="d-flex flex-column justify-content-center align-items-center col-xl-4 col-lg-6 col-md-6 col-12 mb-5">
-            <a href="{% url 'posts:theme2' %}" class="tag_crop tag_a">
-                <img class="tag_img" src="https://wc.wallpaperuse.com/wallp/27-272315_s.jpg" alt="theme_imag">
-                <span class="tag_text">예시 텍스트</span>
-                <p class="mt-1">5월에는 어떤 전시회들이 기다리고 있을까요?</p>
-            </a>
-        </div> 
-        <div class="d-flex flex-column justify-content-center align-items-center col-xl-4 col-lg-6 col-md-6 col-12 mb-5">
-            <a href="{% url 'posts:theme2' %}" class="tag_crop tag_a">
-                <img class="tag_img" src="https://wc.wallpaperuse.com/wallp/27-272315_s.jpg" alt="theme_imag">
-                <span class="tag_text">예시 텍스트</span>
-                <p class="mt-1">5월에는 어떤 전시회들이 기다리고 있을까요?</p>
-            </a>
-        </div> 
-
+          <a href="{% url 'posts:post_list' theme.pk %}" class="tag_crop tag_a">
+            <img class="tag_img" src="https://wc.wallpaperuse.com/wallp/27-272315_s.jpg" alt="theme_imag">
+            <span class="tag_text">{{ theme.title }}</span>
+            <p class="mt-1">5월에는 어떤 전시회들이 기다리고 있을까요?</p>
+          </a>
+        </div>
+      {% endfor %}
     </div>
-</div>
+  </div>
 
 {% endblock content %}
-
-{% comment %} 
-<div class="d-flex flex-column justify-content-center align-items-center col-xl-4 col-lg-6 col-md-6 col-12 p-0 m-0">
-    <div class="tag_crop ">
-        <img class="tag_img" src="https://wc.wallpaperuse.com/wallp/84-842218_s.jpg" alt="theme_imag">
-    </div>
-    <p>5월에는 어떤 전시회들이 기다리고 있을까요?</p>
-</div> 
-{% endcomment %}

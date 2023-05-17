@@ -1,66 +1,54 @@
+# posts/views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from posts.models import Theme, Exhibition, Review, Artist, Gallery
 from posts import api
 from .forms import ReviewForm
 
-
 # Create your views here.
-
 # 첫 페이지 모든 theme의 list를 보여준다.
 def index(request):
-
     theme_list = Theme.objects.all()
-
     context = {
         'theme_list': theme_list,
     }
     # return render(request, 'posts/test/now.html', context)
     return render(request, 'posts/index.html', context)
 
+
 # 선택된 테마의 포함된 전시 리스트를 보여준다.
-
-
 def post_list(request, theme_pk):
     theme = Theme.objects.get(pk=theme_pk)
     context = {
         'theme': theme,
     }
-    return render(request, 'posts/theme.html', context)
+    return render(request, 'posts/post_list.html', context)
+
 
 # 전시 detail 조회
-
-
 def detail(request, post_pk):
-
     post = Exhibition.objects.get(pk=post_pk)
-
+    review_form = ReviewForm()
     context = {
         'post': post,
+        'review_form': review_form,
     }
-
     return render(request, 'posts/detail.html', context)
 
 
 def like(request, post_pk):
-
     post = Exhibition.objects.get(pk=post_pk)
-
     return redirect('posts:detail', post_pk)
 
 
 def visited(request, post_pk):
-
     post = Exhibition.objects.get(pk=post_pk)
-
     return redirect('posts:detail', post_pk)
 
+
 # 리뷰 C
-
-
 def review_create(request, post_pk):
     exhibition = Exhibition.objects.get(pk=post_pk)
-
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
@@ -68,20 +56,13 @@ def review_create(request, post_pk):
             review.exhibition = exhibition
             review.user = request.user
             review.save()
-
             return redirect('posts:detail', post_pk=post_pk)
     else:
         review_form = ReviewForm()
-
-    context = {
-        'exhibition': exhibition,
-        'review_form': review_form,
-    }
-    return render(request, 'posts/review_create.html', context)
+    return redirect('posts:detail', post_pk=post_pk)
 
 
 # 리뷰 U
-
 def review_update(request, post_pk, review_pk):
     exhibition = Exhibition.objects.get(pk=post_pk)
     review = Review.objects.get(post_pk=post_pk, pk=review_pk)
@@ -93,17 +74,10 @@ def review_update(request, post_pk, review_pk):
                 return redirect('posts:detail', post_pk=post_pk)
     else:
         review_form = ReviewForm(instance=review)
-
-    context = {
-        'review_form': review_form,
-        'exhibition': exhibition,
-        'review_form': review_form,
-    }
-    return render(request, 'posts/review_update.html', context)
+    return redirect('posts:detail', post_pk=post_pk)
 
 
 # 리뷰 D
-
 def review_delete(request, post_pk, review_pk):
     review = Review.objects.get(pk=review_pk)
     if request.user == review.user:
@@ -113,9 +87,7 @@ def review_delete(request, post_pk, review_pk):
 
 @login_required
 def create_theme(request):
-
     context = {}
-
     return render(request, 'posts/test/create_theme.html', context)
 
 
