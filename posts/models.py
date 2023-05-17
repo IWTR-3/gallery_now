@@ -59,8 +59,9 @@ class Exhibition(models.Model):
 class Review(models.Model):
     exhibition = models.ForeignKey(
         Exhibition, on_delete=models.SET_NULL, null=True)
-    author = models.ForeignKey(Artist, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.CharField(max_length=255)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_reviews')
     STAR_CHOICES = (
         ('1', '1 Star'),
         ('2', '2 Stars'),
