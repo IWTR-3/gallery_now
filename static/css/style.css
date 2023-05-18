@@ -51,6 +51,7 @@
 }
 
 .over_text {
+    width: 80%;
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
@@ -118,6 +119,13 @@
   .heart-button {
     font-size:30px;
     color: red;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .heart-button2 {
+    font-size:30px;
+    color: gray;
     background-color: transparent;
     border: none;
     cursor: pointer;
