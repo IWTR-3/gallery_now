@@ -44,16 +44,16 @@
         {% if user %}
         {% if review.user == user %}
         <span type="button" data-bs-toggle="modal" data-bs-target="#update" onclick="toggleReviewContent()"><span class="material-symbols-outlined">
-            edit
-            </span></span>
+          edit
+          </span></span>
         {% endif %}
         <form action="{% url 'posts:review_like' post.pk review.pk %}" method="POST">
-            {% csrf_token %}
-            {% if request.user in review.like_users.all %}
-            <input type="submit" value="♥" class="heart-button">
-            {% else %}
-            <input type="submit" value="♡" class="heart-button">
-            {% endif %}
+          {% csrf_token %}
+          {% if request.user in review.like_users.all %}
+          <input type="submit" value="♥" class="heart-button">
+          {% else %}
+          <input type="submit" value="♡" class="heart-button">
+          {% endif %}
         </form>
     {% endif %}
     </div>
