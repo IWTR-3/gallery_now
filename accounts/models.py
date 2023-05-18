@@ -39,12 +39,16 @@ class User(AbstractBaseUser):
 
     # MTM fields
 
-    followings = models.ManyToManyField('self', related_name='followers', symmetrical=False)
-    like_exhibitions = models.ManyToManyField(Exhibition, related_name='like_users')
-    visited_exhibitions = models.ManyToManyField(Exhibition, related_name='visited_users')
-
+    followings = models.ManyToManyField(
+        'self', related_name='followers', symmetrical=False)
+    like_exhibitions = models.ManyToManyField(
+        Exhibition, related_name='like_users')
+    visited_exhibitions = models.ManyToManyField(
+        Exhibition, related_name='visited_users')
 
     # status field
+
+    is_artist = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 

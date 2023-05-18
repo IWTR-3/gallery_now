@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from apis.models import *
 from django.conf import settings
 from taggit.managers import TaggableManager  # 👈 for taggit
 from taggit.models import (
@@ -39,41 +40,63 @@ class Artist(models.Model):
 
 
 class Exhibition(models.Model):
-    FIELDS = ['title', 'period', 'time', 'charge',
-              'grade', ]  # 'thumbnail'
+    REQUIRED_FIELDS = ['title', 'period', 'time', 'charge',
+                       'grade']  # 'thumbnail'
 
     def img_path(instance):
         return f'posts/thumbnails/'
 
     title = models.CharField(max_length=100)
-    period = models.CharField(max_length=100, blank=True, default="")
-    time = models.CharField(max_length=100, blank=True, default="")
-    charge = models.CharField(max_length=100, blank=True, default="")
-    grade = models.CharField(max_length=100, blank=True, default="")
-    # referenceIdentifier = models.URLField(default="")
-    thumbnail = models.ImageField(
-        '대표이미지', upload_to='img_path', blank=True)
+    period = models.CharField(max_length=100, blank=True)
+    description = models.TextField()
+    address = models.CharField(max_length=100, blank=True)
+    time = models.CharField(max_length=100, blank=True)
+    charge = models.CharField(max_length=100, blank=True)
+    grade = models.CharField(max_length=100, blank=True)
+    venue = models.TextField(max_length=100, blank=True)
+
+    thumbnail = models.ImageField(upload_to=img_path, blank=True)
+    item = models.ForeignKey(
+        Item, on_delete=models.SET_DEFAULT, default=1)
+
     tags = TaggableManager()
+
+
+"""
+for item in Item.objects.all():
+    data = {
+        'title': item.title[:100],
+        'period': item.period[:100],
+        'description': item.description,
+        'address': ""[:100],
+        'time': item.time[:100],
+        'charge': item.charge[:100],
+        'grade': item.grade[:100],
+        'venue': item.venue[:100],
+        'thumbnail': item.thumbnail,
+        'item': item,
+        'tags': item.title + item.description,
+    }
+    form = ExhibitionForm(data=data)
+    if form.is_valid():
+        form.save() 
+"""
 
 
 class Review(models.Model):
     exhibition = models.ForeignKey(
-        Exhibition, on_delete=models.SET_NULL, null=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+        Exhibition, on_delete=models.SET_DEFAULT, default=1)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.SET_DEFAULT, default=1)
     content = models.CharField(max_length=255)
-    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_reviews')
-    STAR_CHOICES = (
-        ('1', '1 Star'),
-        ('2', '2 Stars'),
-        ('3', '3 Stars'),
-        ('4', '4 Stars'),
-        ('5', '5 Stars'),
-    )
-    star = models.CharField(max_length=1, choices=STAR_CHOICES)
 
 
 class Theme(models.Model):
+    def img_path(instance):
+        return f'themes/thumbnails/'
     title = models.CharField(max_length=30)
+    description = models.TextField(blank=True)
+    thumbnails = models.ImageField(upload_to=img_path, blank=True)
     exhibitions = models.ManyToManyField(Exhibition, related_name='themes')
 
     # on_delete=models.SET_NULL, null=True
