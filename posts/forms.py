@@ -1,5 +1,5 @@
 from django import forms
-from .models import Exhibition, Review, Artist, Gallery
+from .models import *
 
 
 class ExhibitionForm(forms.ModelForm):
@@ -13,11 +13,11 @@ class ReviewForm(forms.ModelForm):
         label='내용',
         widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
     )
+
     class Meta:
         model = Review
         fields = '__all__'
         fields = ('content',)
-
 
 
 class ArtistForm(forms.ModelForm):
@@ -29,4 +29,10 @@ class ArtistForm(forms.ModelForm):
 class GalleryForm(forms.ModelForm):
     class Meta:
         model = Gallery
+        fields = '__all__'
+
+
+class ThemeForm(forms.ModelForm):
+    class Meta:
+        model = Theme
         fields = '__all__'
