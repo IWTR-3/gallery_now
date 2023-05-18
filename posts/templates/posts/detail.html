@@ -49,7 +49,7 @@
                 </tr>
                 <tr>
                     <th scope="row"><span class="">사이트</span></th>
-                    <td><span class="border-start ps-3 "><a class="link-dark" href="{{ post.homepage }}">홈페이지 바로가기</a></span></td>
+                    <td><span class="border-start ps-3 "><a class="link-dark" href="{{ post.url }}">홈페이지 바로가기</a></span></td>
                 </tr>
                 <tr>
                     <th scope="row" class="border-0"><span class="">작가</span></th>
@@ -75,7 +75,6 @@
     </div>
 </div>
 
-
 <hr>
 <!-- 전시 사진 내용 -->
 {% for image in images %}
@@ -83,7 +82,7 @@
     <h5 class="mb-5">전시 정보</h5>
     <img class="detail_b_img"  src="https://art-map.co.kr/art-map/public/upload/2023/04/exhibition/8a0e457cf9726765c33232e9d0327a29_1BecomingaPlace12019Zelkova188.5x17.2x9.5cm.jpg" alt="">
     
-    <div>최인수 장소가 되다-1</div>
+    <div>{{ artist.name_kr }} {{ image.title }}</div>
     <div>2019년 Zelkova 188.5x17.2x9.5cm</div>
     <div>(이미지 제공 = 데이트갤러리)</div>
 </div>
