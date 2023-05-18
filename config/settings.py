@@ -40,6 +40,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
+    'port-0-gallery-now-e9btb72blgndxnug.sel3.cloudtype.app'
 
 ]
 
