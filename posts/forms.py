@@ -9,6 +9,10 @@ class ExhibitionForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
+    content = forms.CharField(
+        label='내용',
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
+    )
     class Meta:
         model = Review
         fields = '__all__'

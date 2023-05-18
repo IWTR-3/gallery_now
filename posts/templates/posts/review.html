@@ -1,7 +1,28 @@
+<!-- 리뷰 작성 및 조회 -->
+<div class="container">
+    <div class="d-flex align-items-center flex-column mt-4">
+      <h2 class="text-center" style="font-weight: bolder; position:absolute; ">REVIEW</h2>
+      <div class="d-flex justify-content-end w-75">
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#review">
+          CREATE
+        </button>
+      </div>
+    </div>
+  </div>
+  
 {% for review in reviews %}
-<div class="container my-3" style="color:rgb(106, 106, 106);">
-    <hr>
-    <div class="d-flex gap-4 mt-2 ">
+<hr class="mx-auto" style="width:80%;">
+<div class="my-3 " style="color:rgb(106, 106, 106);margin:0 20%;" >
+    {% if review.user == user %}
+    <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
+    {% csrf_token %}
+        <div class="position-relative">
+            <button type="submit" class="close-btn btn-close" aria-label="Close" onclick="return confirm('삭제 하시겠습니까?')">
+            </button>
+        </div>
+    </form>
+    {% endif %}
+    <div class="d-flex align-items-center gap-4 mt-2">
         <!-- 프로필 이미지 -->
         <a href="{% url 'accounts:profile' user.nickname %}">
             {% if review.person.profile_image %}
@@ -11,20 +32,95 @@
         </a>
         <!-- 닉네임 -->
         <span>
-            <span><b>{{ review.person.nickname }}nickname</b></span>
             <div class="d-flex gap-3">
-                <!-- 팔로워 -->
-                <p>followers : <span id="followers-count">{{ review.person.followers.all|length }}</span>
-                </p>
-                <!-- 팔로잉 -->
-                <p>followings : <span id="followings-count">{{ review.person.followings.all|length }}</span>
-                </p>
+                <span><b>{{ review.user.nickname }}</b></span>
+                <p class="ms-2">{{ review.content }}</p>
+
             </div>
         </span>
         {% endif %}
     </div>
-    <!-- 리뷰 -->
-    <p>{{ review.content }}Lorem ipsum dolor, sit amet consectetur adipisicing elit. Recusandae, corporis! Laborum cupiditate fugiat, ullam iste sint esse beatae suscipit. Possimus mollitia qui recusandae libero non nulla sed voluptatum in architecto ratione. Ipsum sit laborum dolorem aliquid unde vero facilis praesentium minus molestiae non recusandae natus, delectus hic ipsam labore cum?</p>
-    <p class="text-end" style="font-size:7px">{{ review.updated_at }}2023-03-24</p>
+    <!-- 좋아요 -->
+    <div class="d-flex justify-content-end align-items-center gap-3" style="margin-left:10%;">
+        {% if user %}
+            <form action="{% url 'posts:review_like' post.pk review.pk %}" method="POST">
+                {% csrf_token %}
+                {% if request.user in review.like_users.all %}
+                <input type="submit" value="♥" class="heart-button">
+                {% else %}
+                <input type="submit" value="♡" class="heart-button">
+                {% endif %}
+            </form>
+            <!-- 이건 뺄지 넣을지 의견 받습니다-->
+            <span>{{ review.like_users.count }}</span>
+            {% if review.user == user %}
+            <span type="button" class="badge rounded-pill text-bg-secondary" data-bs-toggle="modal" data-bs-target="#update" onclick="toggleReviewContent()">수정하기</span>
+            {% endif %}
+
+        {% endif %}
+
+    </div>
 </div>
 {% endfor %}
+
+
+<!-- MODAL -->
+<!-- 리뷰 생성 modal -->
+<div class="modal fade" id="review" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="reviewLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="reviewLabel">리뷰를 작성하시오.</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{% url 'posts:review_create' post.pk %}" method="POST">
+                {% csrf_token %}
+                {{ review_form }}
+                <input style="width:100%;" class="btn btn-primary" type="submit" value="작성하기">
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- 리뷰 업데이트 modal -->
+  <div class="modal fade" id="update" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="updateLabel">리뷰를 수정하시오.</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            {% if review.user == user %}
+            <form id="reviewForm" action="{% url 'posts:review_update' post.pk review.pk %}" method="POST">
+                {% csrf_token %}
+                {{ review_form.as_p }}
+                <input class="form-control" type="submit" value="수정">
+                {% comment %} <span class="badge rounded-pill text-bg-secondary" onclick="toggleReviewContent()">수정하기</span> {% endcomment %}
+              </form>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<script>
+    function toggleReviewContent() {
+      var reviewContent = document.getElementById("reviewContent");
+      if (reviewContent.style.display === "none") {
+        reviewContent.style.display = "block";
+      } else {
+        reviewContent.style.display = "none";
+      }
+    }
+
+
+
+
+  </script>
+  
