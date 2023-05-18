@@ -135,6 +135,7 @@ def review_like(request, post_pk, review_pk):
     context = {
         'is_liked': is_liked,
     }
+    print(JsonResponse(context))
     return JsonResponse(context)
 
 

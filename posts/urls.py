@@ -20,7 +20,7 @@ urlpatterns = [
          views.review_update, name='review_update'),  # review 수정
     path('post/<int:post_pk>/review/<int:review_pk>/delete',
          views.review_delete, name='review_delete'),  # review 삭제
-     path('post/<int:post_pk>/review/<int:review_pk>/like/', views.review_like, name='review_like'),
+     path('post/<int:post_pk>/review/<int:review_pk>/like', views.review_like, name='review_like'),
 
 
 
