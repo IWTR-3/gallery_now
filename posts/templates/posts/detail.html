@@ -1,170 +1,162 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- 상단 EXHIBITION 배너 -->
-<div class="container-fluid d-flex flex-column justify-content-center align-items-center bg_cover">
+  <!-- 상단 EXHIBITION 배너 -->
+  <div class="container-fluid d-flex flex-column justify-content-center align-items-center bg_cover">
     <b class="fs-1 bg_img text-center d-flex align-items-center justify-content-center">EXHIBITION</b>
-</div>
-<!-- 전시회 정보 -->
-<!-- 전시회 제목 -->
+  </div>
+  <!-- 전시회 정보 -->
+  <!-- 전시회 제목 -->
+  <h2 class="text-center mt-5">{{ post.artist }}
+    :
+    {{ post.title }}</h2>
 
-<h2 class="text-center mt-5">{{ post.artist }} : {{ post.title }}</h2>
-<!-- 아이디어 받습니다~ -->
-<div class="" style="margin-left:85%;" >
+  <!-- 아이디어 받습니다~ -->
+  <div class="" style="margin-left:85%;"></div>
 
-</div>
-<div class="container-fluid d-flex justify-content-center align-items-center my-5">
+  <div class="container-fluid d-flex justify-content-center align-items-center my-5">
     <div class="d-flex mt-5" style="height:600px; gap:6rem">
-        {% comment %} <img class="detail_img" src="{{ post.thumbnail.url }}" alt="theme_img" enctype="multipart/form-data">               {% endcomment %}
-        <!-- table : 전시회 세부 -->
-        <div class="d-flex justify-content-center align-items-between text-center fs-5">
-            <table class="table text-start text-nowrap" style="width:500px; font-size:16px">
-                <tr>
-                    <th scope="row"><span class="">기간</span></th>
-                    <td><span class="border-start ps-3 text-secondary">{{ post.period }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="">시간</span></th>
-                    <td><span class="border-start ps-3 text-secondary">{{ post.time }}</span> </td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="">장소</span></th>
-                    <td><span class="border-start ps-3 text-secondary">{{ post.venue }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="">주소</span></th>
-                    <td><span class="border-start ps-3 text-secondary">{{ post.address }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="">휴관</span></th>
-                    <td><span class="border-start ps-3 text-secondary">{{ post.closed_date }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="">관람료</span></th>
-                    <td><span class="border-start ps-3 text-secondary">{{ post.charge }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="">전화번호</span></th>
-                    <td><span class="border-start ps-3 text-secondary">{{ post.number }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="">사이트</span></th>
-                    <td><span class="border-start ps-3 "><a class="link-dark" href="{{ post.url }}">홈페이지 바로가기</a></span></td>
-                </tr>
-                <tr>
-                    <th scope="row" class="border-0"><span class="">작가</span></th>
-                    <td class="border-0"><span class="border-start ps-3 ">{{ post.artist }}</span></td>
-                </tr>   
-                <tr>
-                    <th scope="row" class="border-0"><span class=""></span></th>
-                    <td class="text-end border-0">
-                        {% if request.user.is_authenticated %}
-                        <div class="d-flex flex-row">
-                            <form id="like-form" data-post-id="{{ post.pk }}">
-                                {% csrf_token %}
-                                {% if request.user in post.like_users.all %}
-                                <button type="submit" class="heart-button2">♥</button>
-                                {% else %}
-                                <button type="submit" class="heart-button2">♡</button>
-                                {% endif %}
-                            </form>
-                            <form id="visited-form" data-post-id="{{ post.pk }}">
-                                {% csrf_token %}
-                                {% if request.user in post.visited_users.all %}
-                                <button type="submit" class="heart-button2">[x]</button>
-                                {% else %}
-                                <button type="submit" class="heart-button2">[ ]</button>
-                                {% endif %}
-                            </form>
-                        </div>
-                        {% else %}
-                        {% endif %}
-                        {% comment %} <p style="font-size:7px"> 좋아요 수 : {{ post.like_users.count }}</p> {% endcomment %}
-                    </td>
-                </tr>         
-            </table>
-        </div>
+      <img class="detail_img" src="{{ post.thumbnail.url }}" alt="theme_img" enctype="multipart/form-data">
+      <!-- table : 전시회 세부 -->
+      <div class="d-flex justify-content-center align-items-between text-center fs-5">
+        <table class="table text-start text-nowrap" style="width:500px; font-size:16px">
+          <tr>
+            <th scope="row">
+              <span class="">기간</span></th>
+            <td>
+              <span class="border-start ps-3 text-secondary">{{ post.period }}</span></td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <span class="">시간</span></th>
+            <td>
+              <span class="border-start ps-3 text-secondary">{{ post.time }}</span>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <span class="">장소</span></th>
+            <td>
+              <span class="border-start ps-3 text-secondary">{{ post.gallery.name }}</span></td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <span class="">주소</span></th>
+            <td>
+              <span class="border-start ps-3 text-secondary">{{ post.gallery.address }}</span></td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <span class="">휴관</span></th>
+            <td>
+              <span class="border-start ps-3 text-secondary">{{ post.gallery.closed_days }}</span></td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <span class="">관람료</span></th>
+            <td>
+              <span class="border-start ps-3 text-secondary">{{ post.charge }}</span></td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <span class="">전화번호</span></th>
+            <td>
+              <span class="border-start ps-3 text-secondary">{{ post.gallery.contact }}</span></td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <span class="">사이트</span></th>
+            <td>
+              <span class="border-start ps-3 ">
+                <a class="link-dark" href="{{ post.url }}">홈페이지 바로가기</a></span></td>
+          </tr>
+          <tr>
+            <th scope="row" class="border-0">
+              <span class="">작가</span></th>
+            <td class="border-0">
+              <span class="border-start ps-3 ">{{ post.artist }}</span></td>
+          </tr>
+          <tr>
+            <th scope="row" class="border-0">
+              <span class=""></span></th>
+            <!-- 게시물 좋아요 (비동기) -->
+            <td class="text-end border-0">
+              {% if request.user.is_authenticated %}
+                <div class="d-flex flex-row justify-content-end">
+                  <form id="like-form" data-post-id="{{ post.pk }}">
+                    {% csrf_token %}
+                    {% if request.user in post.like_reviews.all %}
+                      <button type="submit" class="heart-button2" style="font-size:30px">♥
+                      </button>
+                      {% else %}
+                      <button type="submit" class="heart-button2" style="font-size:30px">♡
+                      </button>
+                    {% endif %}
+                    {% comment %} <p style="font-size:20px">{{ post.like_users.count }}</p> {% endcomment %}
+                  </form>
+                </div>
+              {% endif %}
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
-</div>
+  </div>
 
-<hr>
-<!-- 전시 사진 내용 -->
-{% for image in images %}
-<div class="my-5 text-center">
-    <h5 class="mb-5">전시 정보</h5>
-    <img class="detail_b_img"  src="https://art-map.co.kr/art-map/public/upload/2023/04/exhibition/8a0e457cf9726765c33232e9d0327a29_1BecomingaPlace12019Zelkova188.5x17.2x9.5cm.jpg" alt="">
-    
-    <div>{{ image.artist }} {{ image.title }}</div>
-    <div>{{ image.description }}</div>
-    <div>{{ image.affiliation }}</div>
-</div>
-{% endfor %}
+  <hr>
+  <!-- 전시 사진 내용 -->
+  {% for image in images %}
+    <div class="my-5 text-center">
+      <h5 class="mb-5">전시 정보</h5>
+      <img class="detail_b_img" src="{{ image.url }}" alt="exhibition_img">
+      <div>{{ image.artist }}
+        {{ image.title }}</div>
+      <div>{{ image.description }}</div>
+      <div>{{ image.affiliation }}</div>
+    </div>
+  {% endfor %}
 
-<!-- 설명 -->
-<div class="container" style="color:gray;">
+  <!-- 설명 -->
+  <div class="container" style="color:gray;">
     <p>오프닝 :{{ post.regDate }}</p>
     <p>-</p>
     <p>{{ post.description }}</p>
-    <p class="my-4"><b>※ 아트맵에 등록된 이미지와 글의 저작권은 각 작가와 필자에게 있습니다.</b></p>
-</div>
-<hr>
-
-{% include 'posts/review.html' %}
+    <p class="my-4">
+      <b>※ 아트맵에 등록된 이미지와 글의 저작권은 각 작가와 필자에게 있습니다.</b>
+    </p>
+  </div>
+  <hr>
+  {% include 'posts/review.html' %}
 
 {% endblock content %}
 
-
 {% block script %}
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<!-- like -->
-<script>
-  const likeForm = document.querySelector('#like-form');
-  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-  likeForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-    const postId = this.dataset.postId;
-    axios({
-      method: 'post',
-      url: `/post/${postId}/like`,
-      headers: {'X-CSRFToken': csrftoken},
-    })
-      .then((response) => {
-        const isLiked = response.data.is_liked;
-        const likeBtn = document.querySelector('#like-form > button[type=submit]');
-        if (isLiked === true) {
-          likeBtn.value = '♥';
-          likeBtn.innerText = '♥';
-        } else {
-          likeBtn.value = '♡';
-          likeBtn.innerText = '♡';
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  });
-</script>
-<!-- visited -->
-<script>
-    const visitedForm = document.querySelector('#visited-form');
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-    likeForm.addEventListener('submit', function(event) {
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- like -->
+  <script>
+    const likeForm = document.querySelector('#like-form');
+    const csrftoken = document
+      .querySelector('[name=csrfmiddlewaretoken]')
+      .value;
+    likeForm.addEventListener('submit', function (event) {
       event.preventDefault();
       const postId = this.dataset.postId;
       axios({
         method: 'post',
-        url: `/post/${postId}/visited`,
-        headers: {'X-CSRFToken': csrftoken},
+        url: `/post/${postId}/like`,
+        headers: {
+          'X-CSRFToken': csrftoken
+        }
       })
         .then((response) => {
-          const isVisited = response.data.is_visited;
-          const visitedBtn = document.querySelector('#visited-form > button[type=submit]');
-          if (isVisited === true) {
-            visitedBtn.value = '[x]';
-            visitedBtn.innerText = '[x]';
+          const isLiked = response.data.is_liked;
+          const likeBtn = document.querySelector('#like-form > button[type=submit]');
+          if (isLiked === true) {
+            likeBtn.value = '♥';
+            likeBtn.innerText = '♥';
           } else {
-            visitedBtn.value = '[ ]';
-            visitedBtn.innerText = '[ ]';
+            likeBtn.value = '♡';
+            likeBtn.innerText = '♡';
           }
         })
         .catch((error) => {
