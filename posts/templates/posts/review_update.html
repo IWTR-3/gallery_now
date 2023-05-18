@@ -1,12 +1,14 @@
-{% extends 'base.html' %}
+{% comment %} {% extends 'base.html' %}
 
 {% block content %}
-<h2><strong>리뷰 수정</strong></h2>
+  <h2>
+    <strong>리뷰 수정</strong>
+  </h2>
 
-<form action="{% url 'posts:review_create' exhibition.pk review.pk%}" method="POST" >
+  <form action="{% url 'posts:review_update' post.pk review.pk %}" method="POST">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="update">
-</form>
+  </form>
 
-{% endblock content %}
+{% endblock content %} {% endcomment %}
