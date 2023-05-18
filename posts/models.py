@@ -273,7 +273,7 @@ for _ in range(1, 21):
     for i in range(n):
         post = Exhibition.objects.get(pk=random.randint(1, c))
         theme.exhibitions.add(post)
-    theme.save()
+    theme.save()12312321
 
 """
 
