@@ -40,6 +40,9 @@
             <li>
               <a class=" dropdown-item" href="{% url 'accounts:update' %}">setting</a>
             </li>
+            <li>
+              <a class=" dropdown-item" href="{% url 'accounts:change_password' %}">change_password</a>
+            </li>
             <hr class="dropdown-divider">
             <form action="{% url 'accounts:logout' %}" method="POST">
               {% csrf_token %}
