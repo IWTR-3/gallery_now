@@ -30,6 +30,7 @@ def post_list(request, theme_pk):
 
 
 # 전시 detail 조회
+
 def detail(request, post_pk):
     post = Exhibition.objects.get(pk=post_pk)
     reviews = post.review_set.all()
@@ -41,7 +42,7 @@ def detail(request, post_pk):
     }
     return render(request, 'posts/detail.html', context)
 
-
+@login_required
 def like(request, post_pk):
     post = Exhibition.objects.get(pk=post_pk)
     if request.user in post.like_users.all():
@@ -71,6 +72,7 @@ def like(request, post_pk):
 
 
 # 리뷰 C
+@login_required
 def review_create(request, post_pk):
     exhibition = Exhibition.objects.get(pk=post_pk)
     form = ReviewForm(request.POST)
@@ -99,6 +101,7 @@ def review_create(request, post_pk):
 #         review_form = ReviewForm(instance=review)
 #     return redirect('posts:detail', post_pk=post_pk)
 
+@login_required
 def review_update(request, post_pk, review_pk):
     review = Review.objects.get(pk=review_pk)
     review_form = ReviewForm(instance=review)
@@ -115,6 +118,7 @@ def review_update(request, post_pk, review_pk):
 
 
 # 리뷰 D
+@login_required
 def review_delete(request, post_pk, review_pk):
     review = Review.objects.get(pk=review_pk)
     if request.user == review.user:

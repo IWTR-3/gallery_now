@@ -3,14 +3,14 @@
 {% block content %}
   <div class="container-lg mt-5 ">
     <div class="row">
-      {% for theme in theme..all %}
+      {% for theme in theme_list %}
         <div class="d-flex flex-column justify-content-center align-items-center col-xl-4 col-lg-6 col-md-6 col-12 mb-5">
           <a href="{% url 'posts:post_list' theme.pk %}" class="tag_crop tag_a">
-            <img class="tag_img" src="{{ theme.thumbnails.url }}" alt="theme_imag">
+            <img class="tag_img" src="{{ theme.thumbnail.url }}" alt="theme_imag">
             <!-- 테마 제목 -->
-            <span class="tag_text">{{ theme.title }}</span>
+            <span class="tag_text " style="font-weight:bolder;">{{ theme.title }}</span>
             <!-- 디스크립션 내용 -->
-            <p class="mt-1 d-flex " style="max-width:390px;"><span class="material-symbols-outlined">
+            <p class="mt-1 d-flex " style="max-width:390px"><span class="material-symbols-outlined">
               arrow_right
               </span>{{ theme.description | truncatechars:50 }}</p>
           </a>
