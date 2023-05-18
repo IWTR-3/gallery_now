@@ -1,7 +1,7 @@
 # posts/admin.py
 
 from django.contrib import admin
-from .models import Artist, Gallery, Exhibition, Review, Theme
+from .models import *
 
 
 # Register your models here.
