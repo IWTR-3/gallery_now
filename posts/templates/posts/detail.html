@@ -65,9 +65,9 @@
                         <form id="like-form" data-post-id="{{ post.pk }}">
                             {% csrf_token %}
                             {% if request.user in post.like_users.all %}
-                            <button type="submit" class="heart-button">♥</button>
+                            <button type="submit" class="heart-button2">♥</button>
                             {% else %}
-                            <button type="submit" class="heart-button">♡</button>
+                            <button type="submit" class="heart-button2">♡</button>
                             {% endif %}
                         </form>
                         {% endif %}
@@ -97,7 +97,7 @@
   <!-- like -->
   <script>
     const likeForm = document.querySelector('#like-form');
-    const csrftoken = document
+    const csrftoken1 = document
       .querySelector('[name=csrfmiddlewaretoken]')
       .value;
     likeForm.addEventListener('submit', function (event) {

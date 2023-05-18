@@ -20,11 +20,16 @@
 .tag_text {
     font-size: 25px;
     color: white;
-	text-align: center;
-	position: absolute;
-	top: 40%;
-	left: 40%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
     font-weight: 300 ;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    width: 80%;
+    text-align: center;
 }
 
 .tag_img:hover {
