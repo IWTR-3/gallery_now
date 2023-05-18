@@ -1,17 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- 상단 EXHIBITION 배너 -->
-<div class="container-fluid d-flex flex-column justify-content-center align-items-center bg_cover">
+  <!-- 상단 EXHIBITION 배너 -->
+  <div class="container-fluid d-flex flex-column justify-content-center align-items-center bg_cover">
     <b class="fs-1 bg_img text-center d-flex align-items-center justify-content-center">EXHIBITION</b>
-</div>
-<!-- 전시회 정보 -->
-<!-- 전시회 제목 -->
+  </div>
+  <!-- 전시회 정보 -->
+  <!-- 전시회 제목 -->
 
-<h2 class="text-center mt-5">{{ post.artist }} : {{ post.title }}</h2>
-<div class="container-fluid d-flex justify-content-center align-items-center my-5">
+
+  <h2 class="text-center mt-4">{{ post.title }}
+    <hr class="mx-auto" style="width:50%">
+    <span class="fs-6 d-block">{% for artist in post.artists.all %} · {{ artist.name_ko }}
+    {% endfor %} · </span>  </h2>
+
+
+  <div class="container-fluid d-flex justify-content-center align-items-center my-5">
     <div class="d-flex mt-5" style="height:600px; gap:6rem">
-        <img class="detail_img"  src="https://art-map.co.kr/art-map/public/upload/2023/04/exhibition/8a0e457cf9726765c33232e9d0327a29_1BecomingaPlace12019Zelkova188.5x17.2x9.5cm.jpg" alt="">
+        <img class="detail_img" src="{{ post.thumbnail.url }}" alt="theme_img" enctype="multipart/form-data">              
         <!-- table : 전시회 세부 -->
         <div class="d-flex justify-content-center align-items-between text-center fs-5">
             <table class="table text-start text-nowrap" style="width:500px; font-size:16px">
@@ -25,15 +31,15 @@
                 </tr>
                 <tr>
                     <th scope="row"><span class="">장소</span></th>
-                    <td><span class="border-start ps-3 text-secondary">{{ post.venue }}</span></td>
+                    <td><span class="border-start ps-3 text-secondary">{{ post.gallery.name }}</span></td>
                 </tr>
                 <tr>
                     <th scope="row"><span class="">주소</span></th>
-                    <td><span class="border-start ps-3 text-secondary">{{ post.address }}</span></td>
+                    <td><span class="border-start ps-3 text-secondary">{{ post.gallery.address }}</span></td>
                 </tr>
                 <tr>
                     <th scope="row"><span class="">휴관</span></th>
-                    <td><span class="border-start ps-3 text-secondary">{{ post.closed_date }}</span></td>
+                    <td><span class="border-start ps-3 text-secondary">{{ post.gallery.closed_days }}</span></td>
                 </tr>
                 <tr>
                     <th scope="row"><span class="">관람료</span></th>
@@ -41,91 +47,84 @@
                 </tr>
                 <tr>
                     <th scope="row"><span class="">전화번호</span></th>
-                    <td><span class="border-start ps-3 text-secondary">{{ post.number }}</span></td>
+                    <td><span class="border-start ps-3 text-secondary">{{ post.gallery.contact }}</span></td>
                 </tr>
                 <tr>
                     <th scope="row"><span class="">사이트</span></th>
-                    <td><span class="border-start ps-3 "><a class="link-dark" href="{{ post.homepage }}">홈페이지 바로가기</a></span></td>
+                    <td><span class="border-start ps-3 "><a class="link-dark" href="{{ post.url }}">홈페이지 바로가기</a></span></td>
                 </tr>
                 <tr>
-                    <th scope="row"><span class="">작가</span></th>
-                    <td><span class="border-start ps-3 ">{{ artist.name_ko }}최인수</span></td>
-                </tr>            
+                    <th scope="row" class="border-0"><span class="">작가</span></th>
+                    <td class="border-0"><span class="border-start ps-3 "><span class="fs-6">{% for artist in post.artists.all %} · {{ artist.name_ko }}
+                      {% endfor %} · </span></span></td>
+                </tr>   
+                <tr>
+                    <th scope="row" class="border-0"><span class=""></span></th>
+                    <td class="text-end border-0">
+                        {% if request.user.is_authenticated %}
+                        <form id="like-form" data-post-id="{{ post.pk }}">
+                            {% csrf_token %}
+                            {% if request.user in post.like_users.all %}
+                            <button type="submit" class="heart-button">♥</button>
+                            {% else %}
+                            <button type="submit" class="heart-button">♡</button>
+                            {% endif %}
+                        </form>
+                        {% endif %}
+                        {% comment %} <p style="font-size:7px"> 좋아요 수 : {{ post.like_users.count }}</p> {% endcomment %}
+                    </td>
+                </tr>         
             </table>
         </div>
     </div>
 </div>
 <hr>
-<!-- 전시 사진 내용 -->
-{% for image in images %}
-<div class="my-5 text-center">
-    <h5 class="mb-5">전시 정보</h5>
-    <img class="detail_b_img"  src="https://art-map.co.kr/art-map/public/upload/2023/04/exhibition/8a0e457cf9726765c33232e9d0327a29_1BecomingaPlace12019Zelkova188.5x17.2x9.5cm.jpg" alt="">
-    
-    <div>최인수 장소가 되다-1</div>
-    <div>2019년 Zelkova 188.5x17.2x9.5cm</div>
-    <div>(이미지 제공 = 데이트갤러리)</div>
-</div>
-{% endfor %}
-
 <!-- 설명 -->
 <div class="container" style="color:gray;">
-    <p>오프닝 : 2023년 4월 20일 (목) 16시</p>
     <p>-</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit neque mollitia voluptate enim fugiat molestiae illum impedit hic. Quo amet, pariatur illum commodi ex magni vero rem sint praesentium exercitationem, dignissimos beatae dolores voluptates, asperiores quidem similique porro eligendi! Ut dolor, doloremque porro, sint vitae consectetur corporis nobis explicabo veniam amet accusamus! Assumenda eligendi doloribus ducimus reprehenderit, possimus mollitia commodi ullam libero fugiat architecto deserunt totam tempore, natus temporibus tenetur? Sed obcaecati reiciendis ea veniam explicabo cum eos quod ipsum soluta dolores vel doloremque sequi odit saepe exercitationem, possimus molestias quis amet delectus error. Officia excepturi soluta commodi, quidem perferendis, ipsa, cupiditate tenetur molestias omnis harum eius molestiae adipisci sit enim voluptas nihil nemo. Voluptatem delectus omnis architecto voluptate consectetur, quidem animi consequatur illo dolor odio, et repellendus. Blanditiis natus reprehenderit officiis pariatur nam doloremque incidunt, sed voluptates quod aspernatur exercitationem delectus ut corrupti repellat necessitatibus nemo repellendus animi architecto veritatis maiores corporis harum eius! Nisi minus, magni ex accusamus exercitationem, quibusdam earum est commodi expedita voluptatem, impedit maiores ducimus! Perspiciatis esse impedit vel? Distinctio, veritatis laborum saepe eum expedita nulla molestiae ea maxime vitae voluptatem impedit perspiciatis porro esse, ad veniam explicabo. Velit repellat aperiam adipisci sapiente quos eligendi ut. Deleniti vel perspiciatis tenetur quia impedit eveniet, minima animi nisi fuga similique voluptas. Deserunt ab animi doloribus, soluta odio laudantium iusto repudiandae ut quod harum quibusdam nihil ea, impedit assumenda dolorem distinctio qui velit labore adipisci temporibus esse commodi ad saepe. Fuga ratione, voluptas modi repudiandae veritatis soluta nam aspernatur optio atque repellendus at expedita fugiat quos numquam voluptatibus earum corporis sunt iusto alias labore accusamus incidunt? Fuga vitae cumque nemo odio illo at corporis, eos enim dicta rerum corrupti? At aliquam explicabo quasi suscipit quos ipsum illo magni nulla, voluptatem, facere similique minima fuga rem itaque nobis consequatur.</p>
-    <p class="my-4"><b>※ 아트맵에 등록된 이미지와 글의 저작권은 각 작가와 필자에게 있습니다.</b></p>
-</div>
-<form action="{% url 'posts:like' post.pk %}" method="POST">
-    {% csrf_token %}
-    {% if request.user in post.like_users.all %}
-        <input type="submit" value="좋아요 취소">
-    {% else %}
-        <input type="submit" value="좋아요">
-    {% endif %}
-</form>
-<p>좋아요 수: {{ post.like_users.count }}</p>
-<hr>
-
-<!-- 리뷰 작성 및 조회 -->
-<div class="container d-block">
-    <h2 class="text-center mt-4" style="font-weight:bolder">REVIEW</h2>
-    {% comment %} <p class="text-end m-0 p-o">{{ reviews.all|length }}</p> {% endcomment %}
-    <form action="{% url 'posts:review_create' post.pk %}" method="POST">
-        {% csrf_token %}
-        {{ review_form }}
-        <input type="submit" value="리뷰">
-        </div>
-    </form>
-</div>
-{% comment %} 리뷰 삭제 {% endcomment %}
-{% for review in reviews %}
-    {% if review.user == user %}
-        <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
-            {% csrf_token %}
-            <input type="submit" value="삭제" onclick="return confirm('삭제 하시겠습니까?')">
-        </form>
-    {% endif %}
-
-    {% if review.user == user %}
-        <form action="{% url 'posts:review_update' post.pk review.pk %}" method="POST">
-            {% csrf_token %}
-            {{ review_form.as_p }}
-            <input type="submit" value="수정">
-        </form>
-    {% endif %}
-    {{ review.user }} = {{ review.content }}
-    {% if review.user == user %}
-        <form action="{% url 'posts:review_like' post.pk review.pk %}" method="POST">
-            {% csrf_token %}
-            {% if request.user in review.like_users.all %}
-            <input type="submit" value="좋아요 취소">
-            {% else %}
-            <input type="submit" value="좋아요">
-            {% endif %}
-        </form>
-    {% endif %}    
-
-{% endfor %}
-{% include 'posts/review.html' %}
+    <p>{{ post.description }}</p>
+    <p class="my-4">
+      <b>※ 아트맵에 등록된 이미지와 글의 저작권은 각 작가와 필자에게 있습니다.</b>
+    </p>
+  </div>
+  <hr>
+  {% include 'posts/review.html' %}
 
 {% endblock content %}
+
+{% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- like -->
+  <script>
+    const likeForm = document.querySelector('#like-form');
+    const csrftoken = document
+      .querySelector('[name=csrfmiddlewaretoken]')
+      .value;
+    likeForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const postId = this.dataset.postId;
+      axios({
+        method: 'post',
+        url: `/post/${postId}/like`,
+        headers: {
+          'X-CSRFToken': csrftoken
+        }
+      })
+        .then((response) => {
+          const isLiked = response.data.is_liked;
+          const likeBtn = document.querySelector('#like-form > button[type=submit]');
+          if (isLiked === true) {
+            likeBtn.value = '♥';
+            likeBtn.innerText = '♥';
+          } else {
+            likeBtn.value = '♡';
+            likeBtn.innerText = '♡';
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  </script>
+{% endblock script %}
+
