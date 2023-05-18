@@ -9,6 +9,8 @@ from django.http import JsonResponse
 
 # Create your views here.
 # 첫 페이지 모든 theme의 list를 보여준다.
+
+
 def index(request):
     theme_list = Theme.objects.all()
     context = {
@@ -41,24 +43,18 @@ def detail(request, post_pk):
 
 
 def like(request, post_pk):
-    exhibition = get_object_or_404(Exhibition, pk=post_pk)
-    is_liked = False
-
-    if request.user.is_authenticated:
-        if exhibition.like_users.filter(pk=request.user.pk).exists():
-            exhibition.like_users.remove(request.user)
-        else:
-            exhibition.like_users.add(request.user)
-            is_liked = True
+    post = Exhibition.objects.get(pk=post_pk)
+    if request.user in post.like_users.all():
+        post.like_users.remove(request.user)
+        is_liked = False
     else:
-        return JsonResponse({'message': '로그인이 필요합니다.'})
-
+        post.like_users.add(request.user)
+        is_liked = True
     context = {
         'is_liked': is_liked,
+        'likes_count': post.like_users.count()
     }
     return JsonResponse(context)
-
-
 
 
 def visited(request, post_pk):
@@ -99,10 +95,10 @@ def review_update(request, post_pk, review_pk):
     review = Review.objects.get(pk=review_pk)
     review_form = ReviewForm(instance=review)
     if request.method == 'POST':
-            review_form = ReviewForm(request.POST, instance=review)
-            if review_form.is_valid():
-                review_form.save()
-                return redirect('posts:detail', post_pk=post_pk)
+        review_form = ReviewForm(request.POST, instance=review)
+        if review_form.is_valid():
+            review_form.save()
+            return redirect('posts:detail', post_pk=post_pk)
     context = {
         'review_form': review_form,
         'review': review,
@@ -118,8 +114,6 @@ def review_delete(request, post_pk, review_pk):
     return redirect('posts:detail', post_pk)
 
 
-
-
 @login_required
 def review_like(request, post_pk, review_pk):
     review = Review.objects.get(pk=review_pk)
@@ -129,17 +123,11 @@ def review_like(request, post_pk, review_pk):
         is_liked = False
     else:
         review.like_users.add(request.user)
-        is_liked =True
+        is_liked = True
     context = {
         'is_liked': is_liked,
     }
     return JsonResponse(context)
-
-
-
-
-
-
 
 
 @login_required

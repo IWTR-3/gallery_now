@@ -80,6 +80,11 @@ for item in Item.objects.all():
     form = ExhibitionForm(data=data)
     if form.is_valid():
         form.save() 
+
+for post in Exhibition.objects.all():
+    img_path = post.item.thumbnail
+    post.thumbnail = img_path
+    post.save()
 """
 
 
@@ -96,7 +101,7 @@ class Theme(models.Model):
         return f'themes/thumbnails/'
     title = models.CharField(max_length=30)
     description = models.TextField(blank=True)
-    thumbnails = models.ImageField(upload_to=img_path, blank=True)
+    thumbnail = models.ImageField(upload_to=img_path, blank=True)
     exhibitions = models.ManyToManyField(Exhibition, related_name='themes')
 
     # on_delete=models.SET_NULL, null=True
