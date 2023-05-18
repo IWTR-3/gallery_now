@@ -15,6 +15,12 @@
     .ff {
       font-family: 'GowunDodum-Regular';
     }
+
+    .box {
+      border: 1px solid black;
+      border-radius: 12px;
+    }
+
   </style>
 {% endblock style %}
 
@@ -81,102 +87,77 @@
       <li class="nav-item" role="presentation">
         <button class="nav-link" id="followings-tab" data-bs-toggle="tab" data-bs-target="#followings-tab-pane" type="button" role="tab" aria-controls="followings-tab-pane" aria-selected="false" style="text-decoration-line:none; color: black;">followings</button>
       </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="Artis-tab" data-bs-toggle="tab" data-bs-target="#Artis-tab-pane" type="button" role="tab" aria-controls="Artis-tab-pane" aria-selected="false" style="text-decoration-line:none; color: black;">Artist</button>
-      </li>
+      {% comment %} <li class="nav-item" role="presentation">
+        <button class="nav-link" id="Artist-tab" data-bs-toggle="tab" data-bs-target="#Artist-tab-pane" type="button" role="tab" aria-controls="Artist-tab-pane" aria-selected="false" style="text-decoration-line:none; color: black;">Artist</button>
+      </li> {% endcomment %}
     </ul>
 
     <!-- navbar : content -->
     <div class="tab-content mt-5" id="myTabContent">
       <!-- Exhibition -->
-      <div class="tab-pane fade show active" id="Exhibition-tab-pane" role="tabpanel" aria-labelledby="Exhibition-tab" tabindex="0">
-        <h2>전시회</h2>
+      <div class="tab-pane fade" id="Exhibition-tab-pane" role="tabpanel" aria-labelledby="Exhibition-tab" tabindex="0">
+        <h2>좋아요한 전시회</h2>
         <hr>
-        <div class="row">
-          <div class="col-lg-6">
-            <h4>좋아요한 전시회</h4>
-            {% for exhibition in person.like_exhibitions.all %}
-              <div class="my-4">
-                <a class="tag_a row" href="{% url 'posts:detail' exhibition.pk %}">
-                  <div class="col-3" style="height: 150px;">
-                    <img src="{{ exhibition.thumbnail.url }}" alt="exhibition_img" style="margin:auto;" enctype="multipart/form-data" height="150px">
-                  </div>
-                  <div class="col-9">
-                    <div class="mt-4 text-start pb-1" style="font-size:20px; font-weight: 300;">{{ exhibition.title }}</div>
-                    <div class="text-secondary text-start pt-1" style="font-size:15px;">일정 :{{ exhibition.period }}</div>
-                    <div class="text-secondary text-start pt-1" style="font-size:15px;">시간 :{{ exhibition.time }}</div>
-                  </div>
-                </a>
+        <div class="m-4">
+          {% for exhibition in person.like_exhibitions.all %}
+            <a class="tag_a row px-2" href="{% url 'posts:detail' exhibition.pk %}">
+              <div class="col-3" style="height: 150px;">
+                <img src="{{ exhibition.thumbnail.url }}" alt="전시회_포스터" style="margin:auto;" enctype="multipart/form-data" height="150px">
               </div>
-              <hr>
-              {% comment %} <hr class="mx-auto text-secondary" style="width:95%;"> {% endcomment %}
-            {% endfor %}
-          </div>
-          <div class="col-lg-6">
-            <h4>다녀온 전시회</h4>
-            {% for exhibition in person.visited_exhibitions.all %}
-              <div class="my-4">
-                <a class="tag_a row" href="{% url 'posts:detail' exhibition.pk %}">
-                  <div class="col-3" style="height: 150px;">
-                    <img src="{{ exhibition.thumbnail.url }}" alt="exhibition_img" style="margin:auto;" enctype="multipart/form-data" height="150px">
-                  </div>
-                  <div class="col-9">
-                    <div class="mt-4 text-start pb-1" style="font-size:20px; font-weight: 300;">{{ exhibition.title }}</div>
-                    <div class="text-secondary text-start pt-1" style="font-size:15px;">일정 :{{ exhibition.period }}</div>
-                    <div class="text-secondary text-start pt-1" style="font-size:15px;">시간 :{{ exhibition.time }}</div>
-                  </div>
-                </a>
+              <div class="col-9">
+                <div class="mt-4 text-start pb-1" style="font-size:20px; font-weight: 300;">{{ exhibition.title }}</div>
+                <div class="text-secondary text-start pt-1" style="font-size:15px;">일정 :{{ exhibition.period }}</div>
+                <div class="text-secondary text-start pt-1" style="font-size:15px;">시간 :{{ exhibition.time }}</div>
               </div>
-              <hr>
-            {% endfor %}
-          </div>
+            </a>
+            <hr class="mx-auto text-secondary" style="width:100%;">
+          {% endfor %}
         </div>
       </div>
       <!-- Review -->
       <div class="tab-pane fade" id="Review-tab-pane" role="tabpanel" aria-labelledby="Review-tab" tabindex="0">
         <h4>나의 리뷰</h4>
         <hr>
+        <div class="my-4">
           {% for review in person.review_set.all %}
-            <div class="my-4">
-              <a class="tag_a row" href="{% url 'posts:detail' review.exhibition.pk %}">
-                <div class="col-3" style="height: 150px;">
-                  <img src="{{ review.exhibition.thumbnail.url }}" alt="exhibition_img" style="margin:auto;" enctype="multipart/form-data" height="150px">
-                </div>
-                <div class="col-9">
-                  <div class="mt-4 text-start pb-1" style="font-size:20px; font-weight: 300;">{{ review.exhibition.title }}</div>
-                  <div class="text-secondary text-start pt-1" style="font-size:15px;">일정 :{{ review.exhibition.period }}</div>
-                  <div class="text-secondary text-start pt-1" style="font-size:15px;">시간 :{{ review.exhibition.time }}</div>
-                </div>
-              </a>
-            </div>
-            <hr>
+            <a class="tag_a row px-2" href="{% url 'posts:detail' review.exhibition.pk %}">
+              <div class="col-3" style="height: 150px;">
+                <img src="{{ review.exhibition.thumbnail.url }}" alt="전시회_포스터" style="margin:auto;" enctype="multipart/form-data" height="150px">
+              </div>
+              <div class="col-9">
+                <div class="mt-4 text-start pb-1" style="font-size:20px; font-weight: 300;">{{ review.exhibition.title }}</div>
+                <div class="text-secondary text-start pt-1" style="font-size:15px;">{{ review.content }}</div>
+              </div>
+            </a>
+            <hr class="mx-auto text-secondary" style="width:100%;">
           {% endfor %}
-      </div>
-      <!-- followings -->
-      <div class="tab-pane fade" id="followings-tab-pane" role="tabpanel" aria-labelledby="followings-tab" tabindex="0">
-        <h4>팔로잉 목록</h4>
-        <hr>
-        <div>
-          <div class="d-flex flex-wrap">
-          {% for followings in person.followings.all %}
-            <a class="tag_a card border-dark text-center px-2 py-1 m-2" href="{% url 'accounts:profile' followings.nickname %}" style="height: auto;">
-                {{ followings.nickname }}
-                {% comment %} {% if person in followings.followers.all %}
-                🩷
-                {% else %}
-                🤍
-                {% endif %} {% endcomment %}
-              </a>
-              {% endfor %}
-            </div>
         </div>
       </div>
-      <!-- Artist -->
-      <div class="tab-pane fade" id="Artis-tab-pane" role="tabpanel" aria-labelledby="Artis-tab" tabindex="0">
+      <!-- followings -->
+      <div class="tab-pane fade show active" id="followings-tab-pane" role="tabpanel" aria-labelledby="followings-tab" tabindex="0">
+        <h4>팔로잉 목록</h4>
+        <hr>
+        <div class="">
+          <div class="my-2 d-flex">
+            {% for followings in person.followings.all %}
+              <a class="tag_a d-flex justify-content-center align-items-center text-center box p-2 m-1" href="{% url 'accounts:profile' followings.nickname %}" style="height: auto;">
+                {% if user.profile_image %}
+                  <img src="{{ user.profile_image.url }}" alt="post_image" class="rounded-circle" width="25" height="25">
+                {% else %}
+                  <img src="https://i.pinimg.com/564x/d2/98/4e/d2984ec4b65a8568eab3dc2b640fc58e.jpg" alt="no_image" class="rounded-circle" width="25" height="25">
+                {% endif %}
+                <div class="ps-2" style="font-size: 15px;">{{ followings.nickname }}</div>
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% comment %} <!-- Artist -->
+      <div class="tab-pane fade" id="Artist-tab-pane" role="tabpanel" aria-labelledby="Artist-tab" tabindex="0">
         <h4>선호하는 작가</h4>
         <hr>
         <div></div>
-      </div>
+      </div> {% endcomment %}
       <!-- navbar : content end -->
     </div>
 
@@ -184,8 +165,8 @@
 {% endblock content %}
 
 {% block script %}
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="{% static 'js/profile.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="{% static 'js/profile.js' %}"></script>
   <script>
     const triggerTabList = document
       .querySelectorAll('#myTab button')triggerTabList
