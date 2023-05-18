@@ -24,6 +24,9 @@ class Gallery(models.Model):
     closed_days = models.CharField(max_length=255, blank=True)
     contact = models.CharField(max_length=255, blank=True)
 
+    def __str__(self):
+        return '(%s) %s' % (self.pk, self.name)
+
 
 """
 gallery ={
@@ -160,9 +163,9 @@ for name, contact in gallery:
 
 
 class Artist(models.Model):
-    name_ko = models.CharField(max_length=30)
-    name_en = models.CharField(max_length=30)
-    # category = models.CharField(max_length=30)
+    name_ko = models.CharField(max_length=255)
+    name_en = models.CharField(max_length=255)
+    category = models.CharField(max_length=255)
     # COUNTRIES = [
     #     ('KOR', 'South Korea'),
     #     ('USA', 'United States'),
@@ -172,13 +175,13 @@ class Artist(models.Model):
     # ]
     # nationality = models.CharField(max_length=3, choices=COUNTRIES)
 
+    def __str__(self):
+        return '%s  %s' % (self.name_ko, self.name_en)
+
 
 class Exhibition(models.Model):
     REQUIRED_FIELDS = ['title', 'period', 'time', 'charge',
                        'grade']  # 'thumbnail'
-
-    def img_path(instance):
-        return f'posts/thumbnails/'
 
     title = models.CharField(max_length=100)
     period = models.CharField(max_length=100, blank=True)
@@ -187,7 +190,7 @@ class Exhibition(models.Model):
     charge = models.CharField(max_length=100, blank=True)
     grade = models.CharField(max_length=100, blank=True)
 
-    thumbnail = models.ImageField(upload_to=img_path, blank=True)
+    thumbnail = models.ImageField(upload_to='posts/thumbnails/', blank=True)
     item = models.ForeignKey(
         Item, on_delete=models.SET_DEFAULT, default=1)
 
@@ -197,6 +200,9 @@ class Exhibition(models.Model):
         Gallery, on_delete=models.SET_DEFAULT, default=1)
 
     tags = TaggableManager()
+
+    def __str__(self):
+        return '(%s) %s' % (self.pk, self.title)
 
 
 """
@@ -239,11 +245,34 @@ class Review(models.Model):
 
 
 class Theme(models.Model):
-    def img_path(instance):
-        return f'themes/thumbnails/'
+
     title = models.CharField(max_length=30)
     description = models.TextField(blank=True)
-    thumbnail = models.ImageField(upload_to=img_path, blank=True)
-    exhibitions = models.ManyToManyField(Exhibition, related_name='themes')
+    thumbnail = models.ImageField(upload_to='themes/thumbnails/', blank=True)
+    exhibitions = models.ManyToManyField(
+        Exhibition, related_name='themes', blank=True)
 
-    # on_delete=models.SET_NULL, null=True
+    # on_delete=models.SET_NULL, null=Tru
+
+
+"""
+from posts.forms import *
+
+import random
+
+c = Exhibition.objects.all().count()
+
+for _ in range(1, 21):
+    form = ThemeForm()
+    theme = form.save(commit=False)
+    n = random.randint(4, 11)
+    theme.title = "제목"
+    theme.description = "내용"
+    img_path = f'/themes/thumbnails/theme_img_{_}.jpg
+    theme.thumbnail = img_path
+    for i in range(n):
+        post = Exhibition.objects.get(pk=random.randint(1, c))
+        theme.exhibitions.add(post)
+    theme.save()
+
+"""

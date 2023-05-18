@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- 상단 EXHIBITION 배너 -->
-<div class="container-fluid d-flex flex-column justify-content-center align-items-center bg_cover">
+  <!-- 상단 EXHIBITION 배너 -->
+  <div class="container-fluid d-flex flex-column justify-content-center align-items-center bg_cover">
     <b class="fs-1 bg_img text-center d-flex align-items-center justify-content-center">EXHIBITION</b>
-</div>
-<!-- 전시회 정보 -->
-<!-- 전시회 제목 -->
+  </div>
+  <!-- 전시회 정보 -->
+  <!-- 전시회 제목 -->
+  <h2 class="text-center mt-5">{{ post.artist }}
+    :
+    {{ post.title }}</h2>
 
 <h2 class="text-center mt-5">{{ post.artists.all }} : {{ post.title }}</h2>
-<!-- 아이디어 받습니다~ -->
-<div class="" style="margin-left:85%;" >
 
-</div>
-<div class="container-fluid d-flex justify-content-center align-items-center my-5">
+  <div class="container-fluid d-flex justify-content-center align-items-center my-5">
     <div class="d-flex mt-5" style="height:600px; gap:6rem">
         <img class="detail_img" src="{{ post.thumbnail.url }}" alt="theme_img" enctype="multipart/form-data">              
         <!-- table : 전시회 세부 -->
@@ -80,42 +80,48 @@
 <div class="container" style="color:gray;">
     <p>-</p>
     <p>{{ post.description }}</p>
-    <p class="my-4"><b>※ 아트맵에 등록된 이미지와 글의 저작권은 각 작가와 필자에게 있습니다.</b></p>
-</div>
-<hr>
-
-{% include 'posts/review.html' %}
+    <p class="my-4">
+      <b>※ 아트맵에 등록된 이미지와 글의 저작권은 각 작가와 필자에게 있습니다.</b>
+    </p>
+  </div>
+  <hr>
+  {% include 'posts/review.html' %}
 
 {% endblock content %}
 
-
 {% block script %}
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-  const likeForm = document.querySelector('#like-form');
-  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-  likeForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-    const postId = this.dataset.postId;
-    axios({
-      method: 'post',
-      url: `/post/${postId}/like`,
-      headers: {'X-CSRFToken': csrftoken},
-    })
-      .then((response) => {
-        const isLiked = response.data.is_liked;
-        const likeBtn = document.querySelector('#like-form > button[type=submit]');
-        if (isLiked === true) {
-          likeBtn.value = '♥';
-          likeBtn.innerText = '♥';
-        } else {
-          likeBtn.value = '♡';
-          likeBtn.innerText = '♡';
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- like -->
+  <script>
+    const likeForm = document.querySelector('#like-form');
+    const csrftoken = document
+      .querySelector('[name=csrfmiddlewaretoken]')
+      .value;
+    likeForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const postId = this.dataset.postId;
+      axios({
+        method: 'post',
+        url: `/post/${postId}/like`,
+        headers: {
+          'X-CSRFToken': csrftoken
         }
       })
-      .catch((error) => {
-        console.error(error);
-      });
-  });
-</script>
+        .then((response) => {
+          const isLiked = response.data.is_liked;
+          const likeBtn = document.querySelector('#like-form > button[type=submit]');
+          if (isLiked === true) {
+            likeBtn.value = '♥';
+            likeBtn.innerText = '♥';
+          } else {
+            likeBtn.value = '♡';
+            likeBtn.innerText = '♡';
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  </script>
 {% endblock script %}
+
