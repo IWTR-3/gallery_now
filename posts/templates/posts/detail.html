@@ -11,114 +11,73 @@
     :
     {{ post.title }}</h2>
 
-  <!-- 아이디어 받습니다~ -->
-  <div class="" style="margin-left:85%;"></div>
+<h2 class="text-center mt-5">{{ post.artists.all }} : {{ post.title }}</h2>
 
   <div class="container-fluid d-flex justify-content-center align-items-center my-5">
     <div class="d-flex mt-5" style="height:600px; gap:6rem">
-      <img class="detail_img" src="{{ post.thumbnail.url }}" alt="theme_img" enctype="multipart/form-data">
-      <!-- table : 전시회 세부 -->
-      <div class="d-flex justify-content-center align-items-between text-center fs-5">
-        <table class="table text-start text-nowrap" style="width:500px; font-size:16px">
-          <tr>
-            <th scope="row">
-              <span class="">기간</span></th>
-            <td>
-              <span class="border-start ps-3 text-secondary">{{ post.period }}</span></td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <span class="">시간</span></th>
-            <td>
-              <span class="border-start ps-3 text-secondary">{{ post.time }}</span>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <span class="">장소</span></th>
-            <td>
-              <span class="border-start ps-3 text-secondary">{{ post.gallery.name }}</span></td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <span class="">주소</span></th>
-            <td>
-              <span class="border-start ps-3 text-secondary">{{ post.gallery.address }}</span></td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <span class="">휴관</span></th>
-            <td>
-              <span class="border-start ps-3 text-secondary">{{ post.gallery.closed_days }}</span></td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <span class="">관람료</span></th>
-            <td>
-              <span class="border-start ps-3 text-secondary">{{ post.charge }}</span></td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <span class="">전화번호</span></th>
-            <td>
-              <span class="border-start ps-3 text-secondary">{{ post.gallery.contact }}</span></td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <span class="">사이트</span></th>
-            <td>
-              <span class="border-start ps-3 ">
-                <a class="link-dark" href="{{ post.url }}">홈페이지 바로가기</a></span></td>
-          </tr>
-          <tr>
-            <th scope="row" class="border-0">
-              <span class="">작가</span></th>
-            <td class="border-0">
-              <span class="border-start ps-3 ">{{ post.artist }}</span></td>
-          </tr>
-          <tr>
-            <th scope="row" class="border-0">
-              <span class=""></span></th>
-            <!-- 게시물 좋아요 (비동기) -->
-            <td class="text-end border-0">
-              {% if request.user.is_authenticated %}
-                <div class="d-flex flex-row justify-content-end">
-                  <form id="like-form" data-post-id="{{ post.pk }}">
-                    {% csrf_token %}
-                    {% if request.user in post.like_reviews.all %}
-                      <button type="submit" class="heart-button2" style="font-size:30px">♥
-                      </button>
-                      {% else %}
-                      <button type="submit" class="heart-button2" style="font-size:30px">♡
-                      </button>
-                    {% endif %}
-                    {% comment %} <p style="font-size:20px">{{ post.like_users.count }}</p> {% endcomment %}
-                  </form>
-                </div>
-              {% endif %}
-            </td>
-          </tr>
-        </table>
-      </div>
+        <img class="detail_img" src="{{ post.thumbnail.url }}" alt="theme_img" enctype="multipart/form-data">              
+        <!-- table : 전시회 세부 -->
+        <div class="d-flex justify-content-center align-items-between text-center fs-5">
+            <table class="table text-start text-nowrap" style="width:500px; font-size:16px">
+                <tr>
+                    <th scope="row"><span class="">기간</span></th>
+                    <td><span class="border-start ps-3 text-secondary">{{ post.period }}</span></td>
+                </tr>
+                <tr>
+                    <th scope="row"><span class="">시간</span></th>
+                    <td><span class="border-start ps-3 text-secondary">{{ post.time }}</span> </td>
+                </tr>
+                <tr>
+                    <th scope="row"><span class="">장소</span></th>
+                    <td><span class="border-start ps-3 text-secondary">{{ post.gallery.name }}</span></td>
+                </tr>
+                <tr>
+                    <th scope="row"><span class="">주소</span></th>
+                    <td><span class="border-start ps-3 text-secondary">{{ post.gallery.address }}</span></td>
+                </tr>
+                <tr>
+                    <th scope="row"><span class="">휴관</span></th>
+                    <td><span class="border-start ps-3 text-secondary">{{ post.gallery.closed_days }}</span></td>
+                </tr>
+                <tr>
+                    <th scope="row"><span class="">관람료</span></th>
+                    <td><span class="border-start ps-3 text-secondary">{{ post.charge }}</span></td>
+                </tr>
+                <tr>
+                    <th scope="row"><span class="">전화번호</span></th>
+                    <td><span class="border-start ps-3 text-secondary">{{ post.gallery.contact }}</span></td>
+                </tr>
+                <tr>
+                    <th scope="row"><span class="">사이트</span></th>
+                    <td><span class="border-start ps-3 "><a class="link-dark" href="{{ post.url }}">홈페이지 바로가기</a></span></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="border-0"><span class="">작가</span></th>
+                    <td class="border-0"><span class="border-start ps-3 ">{{ post.artists.all }}</span></td>
+                </tr>   
+                <tr>
+                    <th scope="row" class="border-0"><span class=""></span></th>
+                    <td class="text-end border-0">
+                        {% if request.user.is_authenticated %}
+                        <form id="like-form" data-post-id="{{ post.pk }}">
+                            {% csrf_token %}
+                            {% if request.user in post.like_users.all %}
+                            <button type="submit" class="heart-button2">♥</button>
+                            {% else %}
+                            <button type="submit" class="heart-button2">♡</button>
+                            {% endif %}
+                        </form>
+                        {% endif %}
+                        {% comment %} <p style="font-size:7px"> 좋아요 수 : {{ post.like_users.count }}</p> {% endcomment %}
+                    </td>
+                </tr>         
+            </table>
+        </div>
     </div>
-  </div>
-
-  <hr>
-  <!-- 전시 사진 내용 -->
-  {% for image in images %}
-    <div class="my-5 text-center">
-      <h5 class="mb-5">전시 정보</h5>
-      <img class="detail_b_img" src="{{ image.url }}" alt="exhibition_img">
-      <div>{{ image.artist }}
-        {{ image.title }}</div>
-      <div>{{ image.description }}</div>
-      <div>{{ image.affiliation }}</div>
-    </div>
-  {% endfor %}
-
-  <!-- 설명 -->
-  <div class="container" style="color:gray;">
-    <p>오프닝 :{{ post.regDate }}</p>
+</div>
+<hr>
+<!-- 설명 -->
+<div class="container" style="color:gray;">
     <p>-</p>
     <p>{{ post.description }}</p>
     <p class="my-4">
@@ -165,3 +124,4 @@
     });
   </script>
 {% endblock script %}
+
