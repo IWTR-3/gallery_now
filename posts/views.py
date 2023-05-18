@@ -56,18 +56,18 @@ def like(request, post_pk):
     return JsonResponse(context)
 
 
-def visited(request, post_pk):
-    post = Exhibition.objects.get(pk=post_pk)
-    if request.user in post.like_users.all():
-        post.visited_users.remove(request.user)
-        is_visited = False
-    else:
-        post.visited_users.add(request.user)
-        is_visited = True
-    context = {
-        'is_visited': is_visited,
-    }
-    return JsonResponse(context)
+# def visited(request, post_pk):
+#     post = Exhibition.objects.get(pk=post_pk)
+#     if request.user in post.like_users.all():
+#         post.visited_users.remove(request.user)
+#         is_visited = False
+#     else:
+#         post.visited_users.add(request.user)
+#         is_visited = True
+#     context = {
+#         'is_visited': is_visited,
+#     }
+#     return JsonResponse(context)
 
 
 # 리뷰 C
