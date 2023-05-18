@@ -7,11 +7,13 @@
   </div>
   <!-- 전시회 정보 -->
   <!-- 전시회 제목 -->
-  <h2 class="text-center mt-5">{{ post.artist }}
-    :
-    {{ post.title }}</h2>
 
-<h2 class="text-center mt-5">{{ post.artists.all }} : {{ post.title }}</h2>
+
+  <h2 class="text-center mt-4">{{ post.title }}
+    <hr class="mx-auto" style="width:50%">
+    <span class="fs-6 d-block">{% for artist in post.artists.all %} · {{ artist.name_ko }}
+    {% endfor %} · </span>  </h2>
+
 
   <div class="container-fluid d-flex justify-content-center align-items-center my-5">
     <div class="d-flex mt-5" style="height:600px; gap:6rem">
@@ -53,7 +55,8 @@
                 </tr>
                 <tr>
                     <th scope="row" class="border-0"><span class="">작가</span></th>
-                    <td class="border-0"><span class="border-start ps-3 ">{{ post.artists.all }}</span></td>
+                    <td class="border-0"><span class="border-start ps-3 "><span class="fs-6">{% for artist in post.artists.all %} · {{ artist.name_ko }}
+                      {% endfor %} · </span></span></td>
                 </tr>   
                 <tr>
                     <th scope="row" class="border-0"><span class=""></span></th>
