@@ -11,29 +11,31 @@
   </div>
   
 {% for review in reviews %}
-<hr class="mx-auto" style="width:80%;">
-<div class="my-3 " style="color:rgb(106, 106, 106);margin:0 20%;" >
+  <hr class="mx-auto" style="width:80%;">
+  <div class="my-3 " style="color:rgb(106, 106, 106);margin:0 20%;">
+
     {% if review.user == user %}
       <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
         {% csrf_token %}
         <div class="position-relative">
-          <button type="submit" class="close-btn btn-close" aria-label="Close" onclick="return confirm('삭제 하시겠습니까?')">
-          </button>
+          <button type="submit" class="close-btn btn-close" aria-label="Close" onclick="return confirm('삭제 하시겠습니까?')"></button>
         </div>
       </form>
     {% endif %}
+
     <div class="d-flex align-items-center gap-4 mt-2">
+
       <!-- 프로필 이미지 -->
       {% if user.is_authenticated %}
-
-      <a href="{% url 'accounts:profile' user.nickname %}">
-        {% if review.person.profile_image %}
-        <img src="{{ review.person.profile_image.url }}" alt="post_image" class="rounded-circle" width="50" height="50">
-        {% else %}
-        <img src="https://i.pinimg.com/564x/d2/98/4e/d2984ec4b65a8568eab3dc2b640fc58e.jpg" alt="no_image" class="rounded-circle" width="50" height="50">
-        {% endif %}
-      </a>
+        <a href="{% url 'accounts:profile' user.nickname %}">
+          {% if review.person.profile_image %}
+          <img src="{{ review.person.profile_image.url }}" alt="post_image" class="rounded-circle" width="50" height="50">
+          {% else %}
+          <img src="https://i.pinimg.com/564x/d2/98/4e/d2984ec4b65a8568eab3dc2b640fc58e.jpg" alt="no_image" class="rounded-circle" width="50" height="50">
+          {% endif %}
+        </a>
       {% endif %}
+
       <!-- 닉네임 -->
       <span>
         <div class="d-flex gap-3">
@@ -45,10 +47,11 @@
     <div class="d-flex justify-content-end align-items-center gap-1">
       {% if user %}
         {% if review.user == user %}
-          <span type="button" data-bs-toggle="modal" data-bs-target="#update" onclick="toggleReviewContent()"><span class="material-symbols-outlined">
-          edit</span></span>
+          <a type="button" data-bs-toggle="modal" data-bs-target="#update" onclick="toggleReviewContent()"><span class="material-symbols-outlined">
+          edit</span></a>
         {% endif %}
-      <!-- 좋아요 -->
+
+        <!-- 좋아요 -->
         <form id="review-form" data-review-id="{{ review.pk }}" data-post-id="{{ post.pk }}">
           {% csrf_token %}
           {% if request.user in review.like_users.all %}
@@ -60,44 +63,53 @@
       {% endif %}
     </div>
   </div>
-<!-- 리뷰 업데이트 modal -->
-<div class="modal fade" id="update" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateLabel" aria-hidden="true">
+  
+  <!-- MODAL -->
+  <!-- 리뷰 수정 update modal -->
+  <div class="modal fade" id="update" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="updateLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="updateLabel">리뷰를 수정하시오.</h1>
+          <h1 class="modal-title fs-5" id="updateLabel">리뷰를 수정하세요.</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            {% if review.user == user %}
             <form id="reviewForm" action="{% url 'posts:review_update' post.pk review.pk %}" method="POST">
-                {% csrf_token %}
-                <label for="">내용 : </label>
-                <input class="form-control mb-4" type="text" value="{{ review.content }}">
-                <input class="form-control btn btn-primary" type="submit" value="수정하기">
+              {% csrf_token %}
+              <div class="d-flex flex-column">
+                <div class="row gap-2">
+                  <label for="content" class="d-flex align-items-start ps-3">내용 : </label>
+                  <div>
+                    <textarea name="content" id="content" type="text" class="form-control border-0 chat-input" placeholder="{{ review.content }}"></textarea>
+                  </div>
+                    <div>
+                  <input class="form-control btn btn-primary" type="submit" value="수정하기">
+                  </div>
+                  </div>
+                </div>
                 {% comment %} <span class="badge rounded-pill text-bg-secondary" onclick="toggleReviewContent()">수정하기</span> {% endcomment %}
               </form>
-            {% endif %}
         </div>
       </div>
     </div>
   </div>
 {% endfor %}
 
-<!-- MODAL -->
+
+
 <!-- 리뷰 생성 modal -->
-  <div class="modal fade" id="review" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="reviewLabel" aria-hidden="true">
+  <div class="modal fade" id="review" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="reviewLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="reviewLabel">리뷰를 작성하시오.</h1>
+          <h1 class="modal-title fs-5" id="reviewLabel">리뷰를 작성하세요.</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form action="{% url 'posts:review_create' post.pk %}" method="POST">
-              {% csrf_token %}
-              {{ review_form }}
-              <input style="width:100%;" class="btn btn-primary mt-4" type="submit" value="작성하기">
+            {% csrf_token %}
+            {{ review_form.as_p }}
+            <input style="width:100%;" class="btn btn-primary mt-4" type="submit" value="작성하기">
           </form>
         </div>
       </div>

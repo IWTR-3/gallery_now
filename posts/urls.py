@@ -22,9 +22,7 @@ urlpatterns = [
          views.review_delete, name='review_delete'),  # review 삭제
     path('post/<int:post_pk>/review/<int:review_pk>/like',
          views.review_like, name='review_like'),
-
-
-
+    
 
     # 이하 관리자만 접근 가능한 url 목록
     path('staff/', views.staff, name='staff'),

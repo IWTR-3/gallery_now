@@ -33,8 +33,8 @@ def post_list(request, theme_pk):
 
 def detail(request, post_pk):
     post = Exhibition.objects.get(pk=post_pk)
-    reviews = post.review_set.all()
     review_form = ReviewForm()
+    reviews = post.review_set.all()
     context = {
         'post': post,
         'review_form': review_form,
@@ -57,49 +57,23 @@ def like(request, post_pk):
     return JsonResponse(context)
 
 
-# def visited(request, post_pk):
-#     post = Exhibition.objects.get(pk=post_pk)
-#     if request.user in post.like_users.all():
-#         post.visited_users.remove(request.user)
-#         is_visited = False
-#     else:
-#         post.visited_users.add(request.user)
-#         is_visited = True
-#     context = {
-#         'is_visited': is_visited,
-#     }
-#     return JsonResponse(context)
-
-
 # 리뷰 C
 @login_required
 def review_create(request, post_pk):
     exhibition = Exhibition.objects.get(pk=post_pk)
-    form = ReviewForm(request.POST)
-    if form.is_valid():
-        review = form.save(commit=False)
+    review_form = ReviewForm(request.POST)
+    if review_form.is_valid():
+        review = review_form.save(commit=False)
         review.exhibition = exhibition
         review.user = request.user
         review.save()
-        return redirect('posts:detail', post_pk=post_pk)
-    else:
-        review_form = ReviewForm()
-    return redirect('posts:detail', post_pk=post_pk)
-
-
-# 리뷰 U
-# def review_update(request, post_pk, review_pk):
-#     exhibition = Exhibition.objects.get(pk=post_pk)
-#     review = Review.objects.get(pk=review_pk)
-#     if request.user == review.user:
-#         if request.method == 'POST':
-#             review_form = ReviewForm(request.POST, instance=review)
-#             if review_form.is_valid():
-#                 review_form.save()
-#                 return redirect('posts:detail', post_pk=post_pk)
-#     else:
-#         review_form = ReviewForm(instance=review)
-#     return redirect('posts:detail', post_pk=post_pk)
+        return redirect('posts:detail', post_pk)
+    context = {
+        'exhibition': exhibition,
+        'review_form': review_form,
+    }
+    return render(request, 'posts/detail.html', context)
+    
 
 @login_required
 def review_update(request, post_pk, review_pk):
@@ -109,12 +83,12 @@ def review_update(request, post_pk, review_pk):
         review_form = ReviewForm(request.POST, instance=review)
         if review_form.is_valid():
             review_form.save()
-            return redirect('posts:detail', post_pk=post_pk)
+            return redirect('posts:detail', post_pk)
     context = {
         'review_form': review_form,
         'review': review,
     }
-    return render(request, 'posts/review_update.html', context)
+    return render(request, 'posts/detail.html', context)
 
 
 # 리뷰 D
