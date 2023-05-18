@@ -257,13 +257,22 @@ class Theme(models.Model):
 
 """
 from posts.forms import *
-import random
-c = Exhibition.objects.all().count()
-for _ in range(20):
-    n = random.randint(0, 21)
 
+import random
+
+c = Exhibition.objects.all().count()
+
+for _ in range(1, 21):
+    form = ThemeForm()
+    theme = form.save(commit=False)
+    n = random.randint(4, 11)
+    theme.title = "제목"
+    theme.description = "내용"
+    img_path = f'/themes/thumbnails/theme_img_{_}.jpg
+    theme.thumbnail = img_path
     for i in range(n):
-        posts
-    data = { 'title':"테마 제목", 'description':"테마 설명", "exhibitions":None}
-    form = ThemeForm(data=data)
+        post = Exhibition.objects.get(pk=random.randint(1, c))
+        theme.exhibitions.add(post)
+    theme.save()
+
 """
