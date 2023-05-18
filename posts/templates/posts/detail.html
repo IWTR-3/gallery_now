@@ -58,23 +58,25 @@
                 <tr>
                     <th scope="row" class="border-0"><span class=""></span></th>
                     <td class="text-end border-0">
-                        {% comment %} <form action="{% url 'posts:like' post.pk %}" method="POST">
-                            {% csrf_token %}
-                            {% if request.user in post.like_users.all %}
-                            <input type="submit" value="♥" class="heart-button2">
-                            {% else %}
-                            <input type="submit" value="♡" class="heart-button2">
-                            {% endif %}
-                        </form> {% endcomment %}
                         {% if request.user.is_authenticated %}
-                        <form id="like-form" data-post-id="{{ post.pk }}">
-                            {% csrf_token %}
-                            {% if request.user in post.like_users.all %}
-                            <button type="submit" class="heart-button2">♥</button>
-                            {% else %}
-                            <button type="submit" class="heart-button2">♡</button>
-                            {% endif %}
-                        </form>
+                        <div class="d-flex flex-row">
+                            <form id="like-form" data-post-id="{{ post.pk }}">
+                                {% csrf_token %}
+                                {% if request.user in post.like_users.all %}
+                                <button type="submit" class="heart-button2">♥</button>
+                                {% else %}
+                                <button type="submit" class="heart-button2">♡</button>
+                                {% endif %}
+                            </form>
+                            <form id="visited-form" data-post-id="{{ post.pk }}">
+                                {% csrf_token %}
+                                {% if request.user in post.visited_users.all %}
+                                <button type="submit" class="heart-button2">[x]</button>
+                                {% else %}
+                                <button type="submit" class="heart-button2">[ ]</button>
+                                {% endif %}
+                            </form>
+                        </div>
                         {% else %}
 
                         {% endif %}
@@ -117,6 +119,7 @@
 
 {% block script %}
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- like -->
 <script>
   const likeForm = document.querySelector('#like-form');
   const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -144,4 +147,32 @@
       });
   });
 </script>
+<!-- visited -->
+<script>
+    const visitedForm = document.querySelector('#visited-form');
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    likeForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const postId = this.dataset.postId;
+      axios({
+        method: 'post',
+        url: `/post/${postId}/visited`,
+        headers: {'X-CSRFToken': csrftoken},
+      })
+        .then((response) => {
+          const isVisited = response.data.is_visited;
+          const visitedBtn = document.querySelector('#visited-form > button[type=submit]');
+          if (isVisited === true) {
+            visitedBtn.value = '[x]';
+            visitedBtn.innerText = '[x]';
+          } else {
+            visitedBtn.value = '[ ]';
+            visitedBtn.innerText = '[ ]';
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  </script>
 {% endblock script %}

@@ -13,7 +13,7 @@ class Api(models.Model):
 
 class Item(models.Model):
     def img_path(instance):
-        return f'item/thumbnails/'
+        return f'posts/thumbnails/'
 
     api = models.IntegerField()
     thumbnail = models.ImageField(upload_to=img_path, blank=True)
@@ -70,3 +70,14 @@ strings = list(strings.split('\n'))
 strings = '_'.join(strings)
 strings
 """
+# thumbnail < thumbnail
+# artist
+# title < title
+# period < period
+# time < time
+# venue < venue
+# address
+# closed_date
+# charge
+# contact < reference
+# url < url
