@@ -29,6 +29,7 @@
             <img src="{{ review.person.profile_image.url }}" alt="post_image" class="rounded-circle" width="50" height="50">
             {% else %}
             <img src="https://i.pinimg.com/564x/d2/98/4e/d2984ec4b65a8568eab3dc2b640fc58e.jpg" alt="no_image" class="rounded-circle" width="50" height="50">
+            {% endif %}
         </a>
         <!-- 닉네임 -->
         <span>
@@ -37,12 +38,16 @@
                 <p class="ms-2"style="word-wrap: break-word; max-width: 400px;">{{ review.content }}</p>
             </div>
         </span>
-        {% endif %}
     </div>
     <!-- 좋아요 -->
-    <div class="d-flex justify-content-end align-items-center gap-3" style="margin-left:10%;">
+    <div class="d-flex justify-content-end align-items-center gap-1">
         {% if user %}
-        <form id="review-form" data-user-id="{{ user.pk }}" action="{% url 'posts:review_like' post.pk review.pk %}" method="POST">
+        {% if review.user == user %}
+        <span type="button" data-bs-toggle="modal" data-bs-target="#update" onclick="toggleReviewContent()"><span class="material-symbols-outlined">
+            edit
+            </span></span>
+        {% endif %}
+        <form action="{% url 'posts:review_like' post.pk review.pk %}" method="POST">
             {% csrf_token %}
             {% if request.user in review.like_users.all %}
             <input type="submit" value="♥" class="heart-button">
@@ -50,14 +55,7 @@
             <input type="submit" value="♡" class="heart-button">
             {% endif %}
         </form>
-        
-        <!-- 이건 뺄지 넣을지 의견 받습니다-->
-        {% comment %} <span>{{ review.like_users.count }}</span> {% endcomment %}
-        {% if review.user == user %}
-        <span type="button" class="badge rounded-pill text-bg-secondary" data-bs-toggle="modal" data-bs-target="#update" onclick="toggleReviewContent()">수정하기</span>
-        {% endif %}
     {% endif %}
-
     </div>
 </div>
 <!-- 리뷰 업데이트 modal -->
@@ -74,7 +72,7 @@
                 {% csrf_token %}
                 <label for="">내용 : </label>
                 <input class="form-control mb-4" type="text" value="{{ review.content }}">
-                <input class="form-control" type="submit" value="수정">
+                <input class="form-control btn btn-primary" type="submit" value="수정하기">
                 {% comment %} <span class="badge rounded-pill text-bg-secondary" onclick="toggleReviewContent()">수정하기</span> {% endcomment %}
               </form>
             {% endif %}
@@ -98,7 +96,7 @@
             <form action="{% url 'posts:review_create' post.pk %}" method="POST">
                 {% csrf_token %}
                 {{ review_form }}
-                <input style="width:100%;" class="btn btn-primary" type="submit" value="작성하기">
+                <input style="width:100%;" class="btn btn-primary mt-4" type="submit" value="작성하기">
             </form>
         </div>
       </div>
@@ -121,20 +119,3 @@
 
 
   </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="{% static 'js/review.js' %}"></script>
-    <script>
-      const triggerTabList = document
-        .querySelectorAll('#myTab button')triggerTabList
-        .forEach(triggerEl => {
-          const tabTrigger = new bootstrap
-            .Tab(triggerEl)triggerEl
-            .addEventListener('click', event => {
-              event
-                .preventDefault()tabTrigger
-                .show()
-            })
-        })
-    </script>
-  
