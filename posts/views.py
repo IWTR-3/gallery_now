@@ -52,14 +52,22 @@ def like(request, post_pk):
         is_liked = True
     context = {
         'is_liked': is_liked,
-        'likes_count': post.like_users.count()
     }
     return JsonResponse(context)
 
 
 def visited(request, post_pk):
     post = Exhibition.objects.get(pk=post_pk)
-    return redirect('posts:detail', post_pk)
+    if request.user in post.like_users.all():
+        post.visited_users.remove(request.user)
+        is_visited = False
+    else:
+        post.visited_users.add(request.user)
+        is_visited = True
+    context = {
+        'is_visited': is_visited,
+    }
+    return JsonResponse(context)
 
 
 # 리뷰 C
