@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.http import JsonResponse
-from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm , CustomPasswordChangeForm
 
 # Create your views here.
 def profile(request, nickname):
@@ -74,6 +74,7 @@ def signup(request):
 @login_required
 def delete(request):
     request.user.delete()
+    auth_logout(request)
     return redirect('posts:index')
 
 @login_required
@@ -103,5 +104,20 @@ def change_password(request):
         form = PasswordChangeForm(request.user)
     context = {
         'form':form,
+    }
+    return render(request, 'accounts/change_password.html', context)
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = CustomPasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return redirect('posts:index')
+    else:
+        form = CustomPasswordChangeForm(request.user)
+    context = {
+        'form': form,
     }
     return render(request, 'accounts/change_password.html', context)

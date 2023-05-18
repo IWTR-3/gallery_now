@@ -51,7 +51,7 @@
 }
 
 .over_text {
-    width: 80%;
+    width: 110%;
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
