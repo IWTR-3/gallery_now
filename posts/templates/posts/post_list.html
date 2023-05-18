@@ -25,7 +25,7 @@
         <a class="tag_a" href="{% url 'posts:detail' post_list.pk %}">
           <div class="container my-5">
             <div class="row">
-              <div class="col-lg-5 d-flex align-items-center justify-content-center">
+              <div class="mb-5 col-lg-5 d-flex align-items-center justify-content-center">
                 <!-- 전시회 대표 이미지(포스터) -->
                 <img class="theme_img" src="{{ post_list.thumbnail.url }}" alt="theme_img" enctype="multipart/form-data">              
               </div>
@@ -35,7 +35,7 @@
                 <p class="text-lg-start text-center">주소 : {{ post_list.address }}</p>
                 <p class="text-lg-start text-center">기간 : {{ post_list.time }}</p>
                 <!-- 상세 설명문 -->
-                <p class="over_text">{{ post.description }}asdasdadadasd</p>
+                <p class="over_text">{{ post.description }}Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis quisquam, quo recusandae commodi temporibus possimus impedit optio praesentium explicabo! Cumque omnis accusamus necessitatibus temporibus rerum impedit ab doloremque, ad possimus.</p>
               </div>
             </div>
           </div>
