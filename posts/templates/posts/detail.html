@@ -15,7 +15,7 @@
 </div>
 <div class="container-fluid d-flex justify-content-center align-items-center my-5">
     <div class="d-flex mt-5" style="height:600px; gap:6rem">
-        <img class="detail_img" src="{{ post.thumbnail.url }}" alt="theme_img" enctype="multipart/form-data">              
+        {% comment %} <img class="detail_img" src="{{ post.thumbnail.url }}" alt="theme_img" enctype="multipart/form-data">               {% endcomment %}
         <!-- table : 전시회 세부 -->
         <div class="d-flex justify-content-center align-items-between text-center fs-5">
             <table class="table text-start text-nowrap" style="width:500px; font-size:16px">
@@ -53,19 +53,11 @@
                 </tr>
                 <tr>
                     <th scope="row" class="border-0"><span class="">작가</span></th>
-                    <td class="border-0"><span class="border-start ps-3 ">{{ artist.name_ko }}최인수</span></td>
+                    <td class="border-0"><span class="border-start ps-3 ">{{ post.artist }}</span></td>
                 </tr>   
                 <tr>
                     <th scope="row" class="border-0"><span class=""></span></th>
                     <td class="text-end border-0">
-                        {% comment %} <form action="{% url 'posts:like' post.pk %}" method="POST">
-                            {% csrf_token %}
-                            {% if request.user in post.like_users.all %}
-                            <input type="submit" value="♥" class="heart-button2">
-                            {% else %}
-                            <input type="submit" value="♡" class="heart-button2">
-                            {% endif %}
-                        </form> {% endcomment %}
                         {% if request.user.is_authenticated %}
                         <form id="like-form" data-post-id="{{ post.pk }}">
                             {% csrf_token %}
@@ -76,11 +68,8 @@
                             {% endif %}
                         </form>
                         {% else %}
-
                         {% endif %}
-
                         {% comment %} <p style="font-size:7px"> 좋아요 수 : {{ post.like_users.count }}</p> {% endcomment %}
-
                     </td>
                 </tr>         
             </table>
@@ -95,9 +84,9 @@
     <h5 class="mb-5">전시 정보</h5>
     <img class="detail_b_img"  src="https://art-map.co.kr/art-map/public/upload/2023/04/exhibition/8a0e457cf9726765c33232e9d0327a29_1BecomingaPlace12019Zelkova188.5x17.2x9.5cm.jpg" alt="">
     
-    <div>{{ artist.name_kr }} {{ image.title }}</div>
-    <div>2019년 Zelkova 188.5x17.2x9.5cm</div>
-    <div>(이미지 제공 = 데이트갤러리)</div>
+    <div>{{ image.artist }} {{ image.title }}</div>
+    <div>{{ image.description }}</div>
+    <div>{{ image.affiliation }}</div>
 </div>
 {% endfor %}
 
